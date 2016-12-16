@@ -4,11 +4,9 @@ rvm:
 env:
   - DB=postgresql
 script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake db:test:prepare
-  - bundle exec rspec spec/
-
+  - bundle exec rake spec
 before_script:
-  - psql -c 'create database final_learning_app_test' -U postgres
-
+  - bundle exec rake db:create RAILS_ENV=test
+  - bundle exec rake db:migrate
+  - bundle exec rake db:test:prepare
 bundler_args: --binstubs=./bundler_stubs
