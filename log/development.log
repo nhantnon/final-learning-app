@@ -894,3 +894,26 @@ ORDER BY c.conname
   [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "sessions_students" ("student_id", "session_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["student_id", 2], ["session_id", 1], ["created_at", "2016-12-16 05:32:10.646569"], ["updated_at", "2016-12-16 05:32:10.646569"]]
   [1m[35m (6.3ms)[0m  COMMIT
   [1m[36mUser Load (1.3ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (6.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mSQL (25.1ms)[0m  DELETE FROM "users"
+  [1m[36mSQL (7.0ms)[0m  [1mDELETE FROM "sessions"[0m
+  [1m[35mSQL (13.5ms)[0m  DELETE FROM "courses"
+  [1m[36mSQL (0.8ms)[0m  [1mDELETE FROM "reviews"[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'tae@gmail.com' LIMIT 1[0m
+  [1m[35mSQL (6.5ms)[0m  INSERT INTO "users" ("dob", "first_name", "last_name", "email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["dob", "0002-02-02"], ["first_name", "Tae"], ["last_name", "Yun"], ["email", "tae@gmail.com"], ["encrypted_password", "$2a$11$Xl3wNxMZas4..sWPHeduTuq9D4bwREBF.qqnLaN6xTGMZg8oy.oLu"], ["created_at", "2016-12-16 06:13:56.536037"], ["updated_at", "2016-12-16 06:13:56.536037"]]
+  [1m[36m (6.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mUser Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'matt@gmail.com' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("dob", "first_name", "last_name", "email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["dob", "0002-02-02"], ["first_name", "Matt"], ["last_name", "Dimesky"], ["email", "matt@gmail.com"], ["encrypted_password", "$2a$11$gZ/HDDoOV2gL934fhjG1oOsMiYcmDZC8rSB3DOTwX47Qr2nlKhjve"], ["created_at", "2016-12-16 06:13:56.738849"], ["updated_at", "2016-12-16 06:13:56.738849"]]
+  [1m[36m (8.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mUser Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'matt@gmail.com' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (5.9ms)[0m  INSERT INTO "courses" ("price", "subject", "description", "location", "teacher_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"  [["price", "$300"], ["subject", "computers"], ["description", "They suck"], ["location", "San Diego"], ["teacher_id", 3], ["created_at", "2016-12-16 06:13:56.973387"], ["updated_at", "2016-12-16 06:13:56.973387"]]
+  [1m[36m (6.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "sessions" ("location", "time", "course_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["location", "San Diego"], ["time", "4713-01-01 00:00:00.000000 BC"], ["course_id", 2], ["created_at", "2016-12-16 06:13:57.035505"], ["updated_at", "2016-12-16 06:13:57.035505"]]
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "sessions_students" ("student_id", "session_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["student_id", 4], ["session_id", 2], ["created_at", "2016-12-16 06:13:57.037238"], ["updated_at", "2016-12-16 06:13:57.037238"]]
+  [1m[36m (5.3ms)[0m  [1mCOMMIT[0m
