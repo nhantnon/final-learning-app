@@ -5,7 +5,7 @@
 ##Names and github handle for people on the team
 
 - Nhan Nguyen ([nhantnon](https://github.com/nhantnon))
-- Cory Mathis ([coryrmathis]((https://github.com/coryrmathis))
+- Cory Mathis ([coryrmathis](https://github.com/coryrmathis))
 - Matthew Dimesky([dimesky](https://github.com/dimesky))
 - Tae Jun Yun ([yuntsj](https://github.com/yuntsj))
 
