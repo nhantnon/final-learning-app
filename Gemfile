@@ -53,7 +53,7 @@ group :development, :test do
   gem 'simplecov'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+  # gem 'web-console', '~> 2.0'
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
   gem 'capybara', "~> 2.5"
