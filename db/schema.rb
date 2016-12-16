@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20161215232358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "class_tables", force: :cascade do |t|
+  create_table "courses", force: :cascade do |t|
     t.string   "subject",     null: false
     t.text     "description", null: false
     t.string   "location",    null: false
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20161215232358) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "reviews_tables", force: :cascade do |t|
+  create_table "reviews", force: :cascade do |t|
     t.integer  "rating",          null: false
     t.text     "body",            null: false
     t.integer  "reviewer_id",     null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20161215232358) do
     t.datetime "updated_at",      null: false
   end
 
-  create_table "session_tables", force: :cascade do |t|
+  create_table "sessions", force: :cascade do |t|
     t.string   "location",   null: false
     t.datetime "time",       null: false
     t.integer  "class_id",   null: false

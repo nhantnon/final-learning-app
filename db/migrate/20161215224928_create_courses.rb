@@ -1,6 +1,6 @@
-class CreateClassTable < ActiveRecord::Migration
+class CreateCourses < ActiveRecord::Migration
   def change
-    create_table :class_tables do |t|
+    create_table :courses do |t|
       t.string    :subject,       null:false
       t.text      :description,   null:false
       t.string    :location,      null:false
