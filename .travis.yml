@@ -9,6 +9,6 @@ script:
   - bundle exec rspec spec/
 
 before_script:
-  - psql -c 'create database final-learning-app_test' -U postgres
+  - psql -c 'create database final_learning_app_test' -U postgres
 
 bundler_args: --binstubs=./bundler_stubs
