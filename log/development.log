@@ -838,3 +838,6 @@ ORDER BY c.conname
   [1m[36mSession Load (0.5ms)[0m  [1mSELECT "sessions".* FROM "sessions" INNER JOIN "sessions_students" ON "sessions"."id" = "sessions_students"."session_id" WHERE "sessions_students"."student_id" = $1[0m  [["student_id", 2]]
   [1m[35mSession Load (0.4ms)[0m  SELECT  "sessions".* FROM "sessions"  ORDER BY "sessions"."id" ASC LIMIT 1
   [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" INNER JOIN "sessions_students" ON "users"."id" = "sessions_students"."student_id" WHERE "sessions_students"."session_id" = $1[0m  [["session_id", 1]]
+  [1m[36mSession Load (0.6ms)[0m  [1mSELECT  "sessions".* FROM "sessions"  ORDER BY "sessions"."id" ASC LIMIT 1[0m
+  [1m[35mUser Load (0.6ms)[0m  SELECT "users".* FROM "users" INNER JOIN "sessions_students" ON "users"."id" = "sessions_students"."student_id" WHERE "sessions_students"."session_id" = $1  [["session_id", 1]]
+  [1m[36mSession Load (0.6ms)[0m  [1mSELECT  "sessions".* FROM "sessions"  ORDER BY "sessions"."id" ASC LIMIT 1[0m
