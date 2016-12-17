@@ -5,6 +5,6 @@ class HomepageController < ApplicationController
     if request.xhr?
       return render json: @users
     end
-    render "/hompage/index"
+    render "/homepage/index"
   end
 end
