@@ -66,9 +66,6 @@ function bindInfoWindow(marker, map, infowindow, html) {
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15
-    styles: [
-    // styles go here!!!
-    ]
   });
   var geocoder = new google.maps.Geocoder();
   var infoWindow = new google.maps.InfoWindow({map: map});
