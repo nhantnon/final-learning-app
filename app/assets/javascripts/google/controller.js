@@ -17,7 +17,6 @@ Controller.prototype.handlePins = function(){
   var that = this;
   ajaxPromise.done(function(responses){
     that.currentPins = responses;
-    console.log(responses);
     var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8
   });
@@ -29,13 +28,11 @@ Controller.prototype.handlePins = function(){
 
 function geocodeAddress(geocoder, resultsMap, responses) {
   var currentPins = responses;
-  console.log(currentPins);
   for(var i = 0; i < currentPins.length; i++) {
     var x = 0;
     var contentString = '<h1>' + currentPins[i].first_name + '</h1>';
     geocoder.geocode({'address': currentPins[i].location}, function(results, status) {
       if (status === 'OK') {
-        console.log(currentPins[x].location);
         resultsMap.setCenter(results[0].geometry.location);
         var infowindow = new google.maps.InfoWindow({
           maxWidth: 300
@@ -72,7 +69,6 @@ function initMap() {
   });
   var geocoder = new google.maps.Geocoder();
   var infoWindow = new google.maps.InfoWindow({map: map});
-  console.log(navigator.geolocation);
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
