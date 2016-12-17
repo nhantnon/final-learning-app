@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,42 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216005758) do
+ActiveRecord::Schema.define(version: 20161216232625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "courses", force: :cascade do |t|
-    t.string   "subject",     null: false
-    t.text     "description", null: false
-    t.string   "location",    null: false
-    t.string   "price",       null: false
-    t.integer  "teacher_id",  null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "reviews", force: :cascade do |t|
-    t.integer  "rating",          null: false
-    t.text     "body",            null: false
-    t.integer  "reviewer_id",     null: false
-    t.string   "reviewable_type", null: false
-    t.integer  "reviewable_id",   null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  create_table "sessions", force: :cascade do |t|
-    t.string   "location",   null: false
-    t.datetime "time",       null: false
-    t.integer  "course_id",  null: false
+  create_table "skills", force: :cascade do |t|
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "sessions_students", force: :cascade do |t|
-    t.integer  "session_id", null: false
-    t.integer  "student_id", null: false
+  create_table "user_skills", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "skill_id",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -55,7 +32,7 @@ ActiveRecord::Schema.define(version: 20161216005758) do
     t.string   "first_name",                          null: false
     t.string   "last_name",                           null: false
     t.date     "dob",                                 null: false
-    t.string   "location"
+    t.string   "location",                            null: false
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -68,9 +45,8 @@ ActiveRecord::Schema.define(version: 20161216005758) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
