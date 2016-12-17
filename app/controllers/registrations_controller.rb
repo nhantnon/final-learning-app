@@ -1,4 +1,12 @@
 class RegistrationsController < Devise::RegistrationsController
+
+  def create
+    super
+    @user = resource
+    MyMailer.welcome_email(@user).deliver_now
+  end
+
+
   private
 
   def sign_up_params
