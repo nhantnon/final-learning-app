@@ -41,6 +41,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Devise for user authentication etc...
 gem 'devise'
 
+# For storing sensitive ENV variables
+gem 'figaro'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
