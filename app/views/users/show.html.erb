@@ -1,0 +1,13 @@
+<div class="userInfo">
+  <h2><%=@user.first_name + " " + @user.last_name%></h2>
+  <ul>
+    <li>User email: <%=@user.email%></li>
+    <li>User location: <%=@user.location%></li>
+    <%if @user.skills.length > 0 %>
+      <li>User skills: <%=@user.skills%></li>
+    <%else%>
+      <li>This user has not listed any skills</li>
+    <%end%>
+  </ul>
+  <p><%= link_to "BACK TO MAP SEARCH", :root%></p>
+</div>
