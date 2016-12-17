@@ -2,15 +2,16 @@
 <html>
 <head>
   <title>FinalProjectLearningApp</title>
+  <script src="https://use.fontawesome.com/7837c0b485.js"></script>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
   <header>
-    <div>
-
-    </div>
+    <!-- <div> -->
+      <i class="fa fa-level-up fa-3x" aria-hidden="true"></i>
+    <!-- </div> -->
     <nav>
       <% if user_signed_in?  %>
         <a href="#"><%= "#{current_user.first_name} #{current_user.last_name}" %></a>
