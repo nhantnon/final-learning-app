@@ -1,0 +1,5 @@
+<ul>
+  <% User.all.each do |user| %>
+    <li><%= user.first_name %> <%= user.last_name  %></li>
+  <% end %>
+</ul>
