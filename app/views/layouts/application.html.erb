@@ -2,10 +2,15 @@
 <html>
 <head>
   <title>FinalProjectLearningApp</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
   <script src="https://use.fontawesome.com/7837c0b485.js"></script>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=<%=config.token%>&callback=initMap">
+  </script>
 </head>
 <body>
   <header>
