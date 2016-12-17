@@ -1,9 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :courses, foreign_key: :teacher_id
-  has_many :sessions_students, foreign_key: :student_id
-  has_many :sessions, through: :sessions_students
-
-
+  has_many :user_skills
+  has_many :skills, through: :user_skills
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
