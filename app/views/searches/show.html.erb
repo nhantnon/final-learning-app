@@ -14,7 +14,7 @@
     <td><%= user.email %></td>
     <td><%= user.location %></td>
     <td><%= user.dob %></td>
-    <td><%= link_to 'Connect!', :root %></td>
+    <td><%= link_to 'Connect!', user_show_path(user) %></td>
   </tr>
 <% end %>
 </table>
