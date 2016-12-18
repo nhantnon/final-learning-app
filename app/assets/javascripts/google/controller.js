@@ -84,7 +84,7 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     var x = 0;
     this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
-        map.setCenter(results[0].geometry.location);
+        // map.setCenter(results[0].geometry.location);
         var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>';
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
@@ -92,8 +92,8 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
+    that.getCurrentPos();
   }
-  that.getCurrentPos();
 }
 
 
@@ -115,7 +115,13 @@ Controller.prototype.getPosition = function(input){
 
 Controller.prototype.findZip = function(){
   var that = this;
+  var inputBox = document.getElementById('pac-input');
+
+  // Below code positions the input bar in the map
+  // that.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputBox);
+
   $('#pac-input').keypress(function(event){
+    var searchBox = new google.maps.places.SearchBox(inputBox);
     var input = $('#pac-input').val();
     if(event.which == 13){
       that.getPosition(input);
@@ -129,16 +135,12 @@ Controller.prototype.initMap = function() {
     zoom: 12,
     styles: this.getView().mapStyles()
   });
-
-  // Create the search box and link it to the UI element.
-  var input = document.getElementById('pac-input');
-  var searchBox = new google.maps.places.SearchBox(input);
-  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
 }
 
 Controller.prototype.initialize = function(){
-  this.initMap();
-  this.handleInitPins();
-  this.findZip();
+  if(window.location.pathname == '/'){
+    this.initMap();
+    this.handleInitPins();
+    this.findZip();
+  }
 }
