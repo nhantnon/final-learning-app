@@ -3,8 +3,9 @@ function Controller(){
   this._view = new View();
   this.currentPins = new Array;
   this.geocoder = new google.maps.Geocoder();
-  // this.map = new google.maps.Map(document.getElementById('map'), {});
+  this.map;
 }
+
 
 Controller.prototype.getView = function(){
   return this._view;
@@ -14,13 +15,14 @@ Controller.prototype.getModel = function(){
   return this._model;
 }
 
-Controller.prototype.handlePins = function(){
+Controller.prototype.handleInitPins = function(){
   var ajaxPromise = this.getModel().getPins();
   var that = this;
   ajaxPromise.done(function(responses){
-    that.geocodeAddress(that.geocoder, that.getView().getMap(), responses, that.onePerZip(responses));
+    that.geocodeAddress(that.geocoder, responses, that.onePerZip(responses));
   })
 }
+
 
 Controller.prototype.returnUserByZip = function(responses, zip){
   var users = []
@@ -50,56 +52,98 @@ Controller.prototype.onePerZip = function(responses){
   return zips
 }
 
-Controller.prototype.bindInfoWindow = function(marker, map, infowindow, html) {
+Controller.prototype.bindInfoWindow = function(marker, infowindow, html) {
+  var that = this;
   marker.addListener('click', function(){
     infowindow.setContent(html);
-    infowindow.open(map, this)
+    infowindow.open(that.map, this)
   })
 }
 
-Controller.prototype.geocodeAddress = function(geocoder, resultsMap, responses, zips) {
+
+Controller.prototype.getCurrentPos = function(){
+  var that = this;
+  var map = this.map;
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition( function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      map.setCenter(pos);
+      map.setZoom(12);
+    });
+  }
+}
+
+
+Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
   var currentPins = responses;
   var that = this;
+  var map = this.map;
+
   for(var i = 0; i < zips.length; i++) {
     var x = 0;
-    geocoder.geocode({'address': zips[i]}, function(results, status) {
+    this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
-        resultsMap.setCenter(results[0].geometry.location);
+        map.setCenter(results[0].geometry.location);
         var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>';
-        that.bindInfoWindow(that.getView().marker(resultsMap,results[0]), map, that.getView().infoWindow(), html);
+        that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
   }
+  that.getCurrentPos();
+}
+
+
+// Controller.prototype.getPos = function(location){
+//
+// }
+
+Controller.prototype.findZip = function(){
+  var that = this;
+  var map = this.map;
+
+  $('#pac-input').keypress(function(event){
+    var input = $('#pac-input').val();
+    if(event.which == 13){
+
+      that.geocoder.geocode( { 'address': input}, function(results, status) {
+        if (status == 'OK') {
+          var pos = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          }
+          map.setCenter(pos);
+          map.setZoom(12);
+        } else {
+          alert("Geocode was not successful for the following reason: " + status);
+        }
+      });
+    }
+  })
 }
 
 
 Controller.prototype.initMap = function() {
-  var map = this.getView().getMap()
-  var infoWindow = new google.maps.InfoWindow({map: map});
+  var that = this;
+  this.map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 12,
+    styles: this.getView().mapStyles()
+  });
 
-  // if (navigator.geolocation) {
-  //   navigator.geolocation.getCurrentPosition( function(position) {
-  //
-  //     var pos = {
-  //       lat: position.coords.latitude,
-  //       lng: position.coords.longitude
-  //     };
-  //
-  //     infoWindow.setPosition(pos);
-  //     infoWindow.setContent('Location found.');
-  //     map.setCenter(pos);
-  //   }, function() {
-  //     handleLocationError(true, infoWindow, map.getCenter());
-  //   });
-  // }
+  // Create the search box and link it to the UI element.
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
 }
-
-
 
 Controller.prototype.initialize = function(){
   this.initMap();
-  this.handlePins();
+  this.handleInitPins();
+  this.findZip();
 }

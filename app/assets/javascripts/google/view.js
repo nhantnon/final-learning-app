@@ -96,7 +96,7 @@ View.prototype.mapStyles = function(){
 }
 
 View.prototype.getMap = function(){
-  return this.map = new google.maps.Map(document.getElementById('map'), {
+  return new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
     styles: this.mapStyles()
   });
