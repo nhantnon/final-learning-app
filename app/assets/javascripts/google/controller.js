@@ -85,15 +85,18 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
         map.setCenter(results[0].geometry.location);
-        var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>';
+        var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
+          '<h2><a href="/searches/' + zips[x] + '">Take a look!</a><h2>'
+
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
+    that.getCurrentPos();
   }
-  that.getCurrentPos();
+
 }
 
 
@@ -131,9 +134,9 @@ Controller.prototype.initMap = function() {
   });
 
   // Create the search box and link it to the UI element.
-  var input = document.getElementById('pac-input');
-  var searchBox = new google.maps.places.SearchBox(input);
-  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  // var input = document.getElementById('pac-input');
+  // var searchBox = new google.maps.places.SearchBox(input);
+  // this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
 }
 
