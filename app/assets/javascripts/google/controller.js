@@ -86,7 +86,7 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
       if (status === 'OK') {
         map.setCenter(results[0].geometry.location);
         var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
-          '<h2><a href="/search/' + zips[x] + '">Take a look!</a><h2>'
+          '<h2><a href="/searches/' + zips[x] + '">Take a look!</a><h2>'
 
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
