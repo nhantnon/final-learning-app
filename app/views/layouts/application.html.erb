@@ -14,10 +14,10 @@
     <script src="https://use.fontawesome.com/7837c0b485.js"></script>
 </head>
 <body>
-<nav>
+
 
   <div class="navbar-wrapper">
-    <div class="container">
+    <div class="container-fluid">
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="navbar-header">
@@ -48,7 +48,16 @@
     </div>
   </div>
 
-</nav>
+
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+
+      </div>
+    </div>
+  </div>
+
 <%= yield %>
 
 </body>
