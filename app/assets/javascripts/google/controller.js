@@ -2,8 +2,6 @@ function Controller(){
   this._model = new Model();
   this._view = new View();
   this.currentPins = new Array;
-  this.geocoder = new google.maps.Geocoder();
-  this.map;
 }
 
 Controller.prototype.getView = function(){
@@ -14,15 +12,112 @@ Controller.prototype.getModel = function(){
   return this._model;
 }
 
-Controller.prototype.handleInitPins = function(){
+Controller.prototype.handlePins = function(){
   var ajaxPromise = this.getModel().getPins();
   var that = this;
   ajaxPromise.done(function(responses){
-    that.geocodeAddress(that.geocoder, responses, that.onePerZip(responses));
+    // that.currentPins = responses;
+    var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 8,
+    styles: [
+    {
+        "featureType": "administrative",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "lightness": 33
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#f2e5d4"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#c5dac6"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#c5c6c6"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#e4d7c6"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#fbfaf7"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "color": "#acbcc9"
+            }
+        ]
+    }
+]
+  });
+    var geocoder = new google.maps.Geocoder();
+    geocodeAddress(geocoder, map, responses, onePerZip(responses));
   })
-}
 
-Controller.prototype.returnUserByZip = function(responses, zip){
+}
+function returnUserByZip(responses, zip){
   var users = []
   responses.forEach(function(user){
     if(user.location === zip){
@@ -32,113 +127,88 @@ Controller.prototype.returnUserByZip = function(responses, zip){
   return users
 }
 
-Array.prototype.contains = function(location) {
+Array.prototype.contains = function(v) {
   for(var i = 0; i < this.length; i++){
-    if(this[i] === location) return true;
+    if(this[i] === v) return true;
   }
   return false;
 }
 
-Controller.prototype.onePerZip = function(responses){
-  var zips = []
-  var users = []
-  for(var i = 0; i < responses.length; i++){
-    if(!zips.contains(responses[i].location)){
-      zips.push(responses[i].location);
-    }
+function onePerZip(responses){
+ // var zips = responses.map(function(response){return response.location})
+ var zips = []
+ var users = []
+ for(var i = 0; i < responses.length; i++){
+  if(!zips.contains(responses[i].location)){
+    zips.push(responses[i].location);
   }
-  return zips
-}
-
-Controller.prototype.bindInfoWindow = function(marker, infowindow, html) {
-  var that = this;
-  marker.addListener('click', function(){
-    infowindow.setContent(html);
-    infowindow.open(that.map, this)
-  })
+ }
+ return zips
 }
 
 
-Controller.prototype.getCurrentPos = function(){
-  var that = this;
-  var map = this.map;
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition( function(position) {
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      map.setCenter(pos);
-      map.setZoom(12);
-    });
-  }
-}
-
-
-Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
+function geocodeAddress(geocoder, resultsMap, responses, zips) {
   var currentPins = responses;
-  var that = this;
-  var map = this.map;
-
   for(var i = 0; i < zips.length; i++) {
     var x = 0;
-    this.geocoder.geocode({'address': zips[i]}, function(results, status) {
+    // var contentString = '<h1>' + currentPins[i].first_name + '</h1>';
+    geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
-        map.setCenter(results[0].geometry.location);
-        var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>';
-        that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
+        resultsMap.setCenter(results[0].geometry.location);
+        var infowindow = new google.maps.InfoWindow({
+          maxWidth: 300
+        });
+        var marker = new google.maps.Marker({
+          map: resultsMap,
+          position: results[0].geometry.location
+          // info: contentString
+        });
+        // console.log(currentPins)
+        // console.log(responses)
+        var html = '<h1>' + returnUserByZip(responses, zips[x]).length + '</h1>';
+          // '<div id="bodyContent">'
+          // '<p>' + currentPins[x].email + '</p>' +
+          // '<p>' + currentPins[x].location + '</p>' +
+          // '<p><a href="/users/' + currentPins[x].id + '">Learn more about ' + currentPins[x].first_name + '\'s skills!</a></p>';
+
+        bindInfoWindow(marker, map, infowindow, html);
         x ++;
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
   }
-  that.getCurrentPos();
 }
-
-
-Controller.prototype.getPosition = function(input){
-  var that = this;
-  this.geocoder.geocode( { 'address': input}, function(results, status) {
-    if (status == 'OK') {
-      var pos = {
-        lat: results[0].geometry.location.lat(),
-        lng: results[0].geometry.location.lng()
-      }
-      that.map.setCenter(pos);
-      that.map.setZoom(12);
-    } else {
-      alert("Geocode was not successful for the following reason: " + status);
-    }
-  });
-}
-
-Controller.prototype.findZip = function(){
-  var that = this;
-  $('#pac-input').keypress(function(event){
-    var input = $('#pac-input').val();
-    if(event.which == 13){
-      that.getPosition(input);
-    }
+function bindInfoWindow(marker, map, infowindow, html) {
+  marker.addListener('click', function(){
+    infowindow.setContent(html);
+    infowindow.open(map, this)
   })
 }
 
-Controller.prototype.initMap = function() {
-  var that = this;
-  this.map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 12,
-    styles: this.getView().mapStyles()
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15
   });
+  var geocoder = new google.maps.Geocoder();
+  var infoWindow = new google.maps.InfoWindow({map: map});
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
 
-  // Create the search box and link it to the UI element.
-  var input = document.getElementById('pac-input');
-  var searchBox = new google.maps.places.SearchBox(input);
-  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('Location found.');
+      map.setCenter(pos);
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  }
 }
 
+
 Controller.prototype.initialize = function(){
-  this.initMap();
-  this.handleInitPins();
-  this.findZip();
+  this.handlePins();
 }
