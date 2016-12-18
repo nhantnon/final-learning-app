@@ -8,9 +8,6 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=<%=config.token%>&callback=initMap">
-    </script>
     <script src="https://use.fontawesome.com/7837c0b485.js"></script>
 </head>
 <body>
@@ -46,11 +43,14 @@
     </nav>
     </div>
   </div>
- 
+
 <div class="yield-box"></div>
 
   <%= yield %>
-    
+
 </body>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= config.token %>&libraries=places">
+</script>
 
 </html>
