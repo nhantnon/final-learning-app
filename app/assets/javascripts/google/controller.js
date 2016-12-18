@@ -16,7 +16,7 @@ Controller.prototype.handlePins = function(){
   var ajaxPromise = this.getModel().getPins();
   var that = this;
   ajaxPromise.done(function(responses){
-    that.currentPins = responses;
+    // that.currentPins = responses;
     var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
     styles: [
@@ -113,17 +113,46 @@ Controller.prototype.handlePins = function(){
 ]
   });
     var geocoder = new google.maps.Geocoder();
-    geocodeAddress(geocoder, map, responses);
+    geocodeAddress(geocoder, map, responses, onePerZip(responses));
   })
 
 }
+function returnUserByZip(responses, zip){
+  var users = []
+  responses.forEach(function(user){
+    if(user.location === zip){
+      users.push(user)
+    }
+  })
+  return users
+}
 
-function geocodeAddress(geocoder, resultsMap, responses) {
+Array.prototype.contains = function(v) {
+  for(var i = 0; i < this.length; i++){
+    if(this[i] === v) return true;
+  }
+  return false;
+}
+
+function onePerZip(responses){
+ // var zips = responses.map(function(response){return response.location})
+ var zips = []
+ var users = []
+ for(var i = 0; i < responses.length; i++){
+  if(!zips.contains(responses[i].location)){
+    zips.push(responses[i].location);
+  }
+ }
+ return zips
+}
+
+
+function geocodeAddress(geocoder, resultsMap, responses, zips) {
   var currentPins = responses;
-  for(var i = 0; i < currentPins.length; i++) {
+  for(var i = 0; i < zips.length; i++) {
     var x = 0;
-    var contentString = '<h1>' + currentPins[i].first_name + '</h1>';
-    geocoder.geocode({'address': currentPins[i].location}, function(results, status) {
+    // var contentString = '<h1>' + currentPins[i].first_name + '</h1>';
+    geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
         resultsMap.setCenter(results[0].geometry.location);
         var infowindow = new google.maps.InfoWindow({
@@ -131,14 +160,16 @@ function geocodeAddress(geocoder, resultsMap, responses) {
         });
         var marker = new google.maps.Marker({
           map: resultsMap,
-          position: results[0].geometry.location,
-          info: contentString
+          position: results[0].geometry.location
+          // info: contentString
         });
-        var html = '<h1>' + currentPins[x].first_name + " " + currentPins[x].last_name + '</h1>' +
-          '<div id="bodyContent">' +
-          '<p>' + currentPins[x].email + '</p>' +
-          '<p>' + currentPins[x].location + '</p>' +
-          '<p><a href="/users/' + currentPins[x].id + '">Learn more about ' + currentPins[x].first_name + '\'s skills!</a></p>';
+        // console.log(currentPins)
+        // console.log(responses)
+        var html = '<h1>' + returnUserByZip(responses, zips[x]).length + '</h1>';
+          // '<div id="bodyContent">'
+          // '<p>' + currentPins[x].email + '</p>' +
+          // '<p>' + currentPins[x].location + '</p>' +
+          // '<p><a href="/users/' + currentPins[x].id + '">Learn more about ' + currentPins[x].first_name + '\'s skills!</a></p>';
 
         bindInfoWindow(marker, map, infowindow, html);
         x ++;
