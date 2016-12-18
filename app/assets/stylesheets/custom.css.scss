@@ -26,9 +26,10 @@ $navbar-default-bg: #563D7C;
 
 
 #map {
-        height: 50%;
-        width: 50%;
-        margin: auto;
+        height: 80%;
+        width: 60%;
+        margin:60px auto 0 auto;
+
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -55,7 +56,7 @@ $navbar-default-bg: #563D7C;
 .new_user {
   max-width: 360px;
   padding: 15px;
-  margin: 0 auto;
+  margin:60px auto 0 auto;
 }
 .new_user .form-signin-heading{
   max-width: 360px;
@@ -107,4 +108,31 @@ $navbar-default-bg: #563D7C;
 	color: #fff;
 	background-color: #53A3CD;
 	border-color: #53A3CD;
+}
+
+
+@media (min-width: 768px) {
+  /* Navbar positioning foo */
+  .navbar-wrapper {
+    margin-top: 20px;
+  }
+  .navbar-wrapper .container {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .navbar-wrapper .navbar {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  /* The navbar becomes detached from the top, so we round the corners */
+  .navbar-wrapper .navbar {
+    border-radius: 4px;
+  }
+}
+
+@media (min-width: 992px) {
+  .featurette-heading {
+    margin-top: 120px;
+  }
 }
