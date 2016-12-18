@@ -6,7 +6,6 @@ function Controller(){
   this.map;
 }
 
-
 Controller.prototype.getView = function(){
   return this._view;
 }
@@ -22,7 +21,6 @@ Controller.prototype.handleInitPins = function(){
     that.geocodeAddress(that.geocoder, responses, that.onePerZip(responses));
   })
 }
-
 
 Controller.prototype.returnUserByZip = function(responses, zip){
   var users = []
@@ -99,34 +97,31 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
 }
 
 
-// Controller.prototype.getPos = function(location){
-//
-// }
+Controller.prototype.getPosition = function(input){
+  var that = this;
+  this.geocoder.geocode( { 'address': input}, function(results, status) {
+    if (status == 'OK') {
+      var pos = {
+        lat: results[0].geometry.location.lat(),
+        lng: results[0].geometry.location.lng()
+      }
+      that.map.setCenter(pos);
+      that.map.setZoom(12);
+    } else {
+      alert("Geocode was not successful for the following reason: " + status);
+    }
+  });
+}
 
 Controller.prototype.findZip = function(){
   var that = this;
-  var map = this.map;
-
   $('#pac-input').keypress(function(event){
     var input = $('#pac-input').val();
     if(event.which == 13){
-
-      that.geocoder.geocode( { 'address': input}, function(results, status) {
-        if (status == 'OK') {
-          var pos = {
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng()
-          }
-          map.setCenter(pos);
-          map.setZoom(12);
-        } else {
-          alert("Geocode was not successful for the following reason: " + status);
-        }
-      });
+      that.getPosition(input);
     }
   })
 }
-
 
 Controller.prototype.initMap = function() {
   var that = this;
