@@ -115,7 +115,13 @@ Controller.prototype.getPosition = function(input){
 
 Controller.prototype.findZip = function(){
   var that = this;
+  var inputBox = document.getElementById('pac-input');
+
+  // Below code positions the input bar in the map
+  // that.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputBox);
+
   $('#pac-input').keypress(function(event){
+    var searchBox = new google.maps.places.SearchBox(inputBox);
     var input = $('#pac-input').val();
     if(event.which == 13){
       that.getPosition(input);
