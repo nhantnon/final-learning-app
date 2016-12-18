@@ -8,6 +8,8 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
+    <script asynch defer src="https://maps.googleapis.com/maps/api/js?key=<%= config.token %>&libraries=places">
+    </script>
     <script src="https://use.fontawesome.com/7837c0b485.js"></script>
 </head>
 <body>
@@ -50,7 +52,5 @@
 
 </body>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= config.token %>&libraries=places">
-</script>
 
 </html>
