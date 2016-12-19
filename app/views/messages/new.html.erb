@@ -1,0 +1,6 @@
+<%= form_for :message, :url => "/messages" do |f| %>
+  <%= f.label :message %>:
+  <%= f.text_area :content %><br />
+
+  <%= f.submit %>
+<% end %>
