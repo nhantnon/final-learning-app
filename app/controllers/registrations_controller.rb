@@ -6,6 +6,10 @@ class RegistrationsController < Devise::RegistrationsController
     MyMailer.welcome_email(@user).deliver_now
   end
 
+  def after_sign_up_path_for(resource)
+    "/users/#{resource.id}" # Or :prefix_to_your_route
+  end
+
 
   private
 
