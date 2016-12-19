@@ -12,7 +12,7 @@
                               <img class="img-circle img-responsive" alt="" src="http://placehold.it/300x300">
                            </figure>
                            <div class="row">
-                                <a href="mail-compose.html" class="btn btn-green btn-block btn-compose-email">Send a Message</a>
+                                <a href="#" class="btn btn-green btn-block btn-compose-email">Send a Message</a>
 
                            </div>
                         </div>
@@ -45,7 +45,11 @@
                   <h4>Skills</h4>
                   <ul class="list-group">
                       <%if @user.skills.length > 0 %>
-                        <li class="list-group-item"> <%=@user.skills%></li>
+                        <%@user.skills.each do |skill|%>
+                          <li class="list-group-item"> 
+                            <%=skill.name%>
+                          </li>  
+                        <%end%>
                       <%else%>
                         <li class="list-group-item"> This user has not listed any skills</li>
                       <%end%>
