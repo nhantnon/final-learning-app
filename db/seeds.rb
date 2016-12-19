@@ -3,7 +3,7 @@ Skill.delete_all
 
 
 tae = User.create(dob: "02/02/02",first_name: "Tae", last_name: "Yun", email: "tae@gmail.com", password: "password", password_confirmation: "password", location: Faker::Address.zip)
-skills = ["boxing","mandarin", "singing", "philosophy"]
+skills = ["Sports", "Language", "Music", "Philosophy", "Technology", "Math", "Science", "The Arts"]
 skills.each do |skill|
   Skill.create!(name: skill)
 end
