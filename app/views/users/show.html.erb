@@ -1,7 +1,9 @@
 <p><%= link_to "BACK TO MAP SEARCH", :root%></p>
+
 <% if @user == current_user %>
   <p><%= link_to "Edit Profile", user_profile_edit_path %></p>
 <% end %>
+
 <div class="container userInfo">
 <div class="row">
     <div class="col-sm-12">
@@ -48,9 +50,9 @@
                   <ul class="list-group">
                       <%if @user.skills.length > 0 %>
                         <%@user.skills.each do |skill|%>
-                          <li class="list-group-item"> 
+                          <li class="list-group-item">
                             <%=skill.name%>
-                          </li>  
+                          </li>
                         <%end%>
                       <%else%>
                         <li class="list-group-item"> This user has not listed any skills</li>
