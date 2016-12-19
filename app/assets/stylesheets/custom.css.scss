@@ -1,6 +1,7 @@
 $navbar-default-bg: #563D7C;
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
 
 .yield-box {
   padding-top: 80px;
@@ -131,21 +132,21 @@ $navbar-default-bg: #563D7C;
   border-top-right-radius: 0;
 }
 .new_user .btn-default {
-	background-color: #59B2E0;
-	outline: none;
-	color: #fff;
-	height: auto;
-	width: 330px;
-	font-size: 14px;
-	font-weight: normal;
-	padding: 14px 0;
-	border-color: #59B2E6;
+  background-color: #59B2E0;
+  outline: none;
+  color: #fff;
+  height: auto;
+  width: 330px;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 14px 0;
+  border-color: #59B2E6;
 }
 .new_user .btn-default:hover,
 .new_user .btn-default:hover:focus {
-	color: #fff;
-	background-color: #53A3CD;
-	border-color: #53A3CD;
+  color: #fff;
+  background-color: #53A3CD;
+  border-color: #53A3CD;
 }
 
 
@@ -174,3 +175,123 @@ $navbar-default-bg: #563D7C;
     margin-top: 120px;
   }
 }
+
+
+
+/*   */
+
+body{margin-top:20px;
+background:#eee;
+}
+
+.btn-compose-email {
+    padding: 10px 0px;
+    margin-bottom: 20px;
+}
+
+.btn-green {
+    background-color: #00C851;
+    border-color: #00C851;
+    color: white;
+}
+
+.panel-teal .panel-heading {
+    background-color: #37BC9B;
+    border: 1px solid #36b898;
+    color: white;
+}
+
+.panel .panel-heading {
+    padding: 5px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    border-bottom: 1px solid #DDD;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.panel .panel-heading .panel-title {
+    padding: 10px;
+    font-size: 17px;
+}
+
+form .form-group {
+    position: relative;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.inner-all {
+    padding: 10px;
+}
+
+/* mail */
+
+.compose-mail {
+  position: relative;
+  padding: 15px;
+}
+.compose-mail textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #DDD;
+}
+
+@media (max-width: 640px) {
+  .compose-mail-wrapper .compose-mail {
+    padding: 0px;
+  }
+}
+@media (max-width: 360px) {
+  .compose-mail-wrapper .search-mail input {
+    width: 130px;
+  }
+  .compose-mail-wrapper .panel-sub-heading {
+    padding: 10px 7px;
+  }
+}
+
+
+
+/* resume stuff */
+
+.bs-callout {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #eee;
+    border-image: none;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px 1px 1px 5px;
+    margin-bottom: 5px;
+    padding: 20px;
+}
+.bs-callout:last-child {
+    margin-bottom: 0px;
+}
+.bs-callout h4 {
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.bs-callout-green {
+    border-left-color: #00C851;
+}
+
+.bs-callout-green h4{
+    color: #00C851;
+}
+
+.resume .list-group-item:first-child, .resume .list-group-item:last-child{
+  border-radius:0;
+}
+
+/*makes an anchor inactive(not clickable)*/
+.inactive-link {
+   pointer-events: none;
+   cursor: default;
+}
+

@@ -84,8 +84,10 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     var x = 0;
     this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
-        // map.setCenter(results[0].geometry.location);
-        var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>';
+        map.setCenter(results[0].geometry.location);
+        var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
+          '<h2><a href="/searches/' + zips[x] + '">Take a look!</a><h2>'
+
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
       } else {
@@ -94,6 +96,7 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     });
     that.getCurrentPos();
   }
+
 }
 
 
@@ -135,6 +138,7 @@ Controller.prototype.initMap = function() {
     zoom: 12,
     styles: this.getView().mapStyles()
   });
+
 }
 
 Controller.prototype.initialize = function(){

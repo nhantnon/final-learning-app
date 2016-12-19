@@ -4,4 +4,15 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  def self.find_users_from_zip(zip)
+    users = []
+    self.all.each do |user|
+      if user.location == zip
+        users << user
+      end
+    end
+    return users
+  end
+
 end
