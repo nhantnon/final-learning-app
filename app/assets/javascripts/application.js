@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= ./channels
 
 $(document).on('turbolinks:load', function() {
   new Controller().initialize();

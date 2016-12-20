@@ -1,0 +1,5 @@
+<ul id="message-board">
+  <%@messages.each do |message|%>
+    <li><i><%=message.created_at.strftime("%b, %e, %Y %k:%M%p")%> </i><%= message.sender.first_name%>: <%=message.content%></li>
+  <%end%>
+</ul>
