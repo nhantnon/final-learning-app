@@ -1,29 +1,11 @@
+<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 
-
-<div class="box">
-  <div class="container-4">
-    <input type="search" id="search" placeholder="Search..." />
-    <!-- <input id="pac-input" class="controls" type="text" placeholder="Search Box"> -->
-    <select id="select-skill">
-  		<option value="All">All</option>
- 		 	<% @skills.each do |skill| %>
-    			<option value="<%=skill.name%>"><%=skill.name%></option>
-  			<% end %>
-	</select>
-    
-    <button class="icon"><i class="fa fa-search"></i></button>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
+<select id="select-skill">
+  <option value="All">All</option>
+  <% @skills.each do |skill| %>
+    <option value="<%=skill.name%>"><%=skill.name%></option>
+  <% end %>
+</select>
 
 
 <div id="map"></div>
