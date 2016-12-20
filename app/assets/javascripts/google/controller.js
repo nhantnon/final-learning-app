@@ -1,3 +1,12 @@
+var markersArray = [];
+
+function clearOverlays() {
+  for (var i = 0; i < markersArray.length; i++ ) {
+    markersArray[i].setMap(null);
+  }
+  markersArray.length = 0;
+}
+
 function Controller(){
   this._model = new Model();
   this._view = new View();
@@ -84,7 +93,7 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     var x = 0;
     this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
-        map.setCenter(results[0].geometry.location);
+        // map.setCenter(results[0].geometry.location);
         var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
           '<h2><a href="/searches/' + zips[x] + '">Take a look!</a><h2>'
 
@@ -94,9 +103,7 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
-    that.getCurrentPos();
   }
-
 }
 
 
@@ -116,18 +123,99 @@ Controller.prototype.getPosition = function(input){
   });
 }
 
+function returnCurrentZip(){
+  navigator.geolocation.getCurrentPosition( function(position) {
+    var pos = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '', method: "GET"})
+    .done(function(response){
+      return (response.results[0].address_components[7].long_name);
+    })
+  });
+}
+
 Controller.prototype.findZip = function(){
   var that = this;
-  var inputBox = document.getElementById('pac-input');
+  if (document.getElementById('pac-input').value){
+    var inputBox = document.getElementById('pac-input');
+  } else {
+    var inputBox;
+    navigator.geolocation.getCurrentPosition( function(position) {
+    var pos = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '', method: "GET"})
+    .done(function(response){
+      inputBox = (response.results[0].address_components[7].long_name);
+      console.log(inputBox);
+
+
+      clearOverlays(); // clears all markers from map
+      var closestZips = new Array;
+      var zipsToMap;
+      var ajaxPromise = that.getModel().getPins();
+      var closestZipToMap = new Array;
+
+
+      var distance = 5;
+      $.ajax( {url:'https://www.zipcodeapi.com/rest/ZjnBaP5AUeunIaDuT0eUvcvorlV37bG7u4IFUNgO2LcKVQfPQuKmGfL7BGbISRPm/radius.json/'+inputBox+'/'+distance+'/miles?minimal', method: 'GET'} )
+      .done(function(responses){
+        for(var i in responses.zip_codes){
+          closestZips.push(responses.zip_codes[i])
+        }
+
+          ajaxPromise.done(function(responses2){
+            zipsToMap = that.onePerZip(responses2);
+
+            for(var i = 0; i < zipsToMap.length; i++){
+              if(closestZips.includes(zipsToMap[i])){
+                closestZipToMap.push(zipsToMap[i])
+              }
+            }
+            that.geocodeAddress(that.geocoder, responses2, closestZipToMap)
+          })
+      })
+    })
+  });
+  }
 
   // Below code positions the input bar in the map
   // that.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputBox);
 
   $('#pac-input').keypress(function(event){
-    var searchBox = new google.maps.places.SearchBox(inputBox);
+
     var input = $('#pac-input').val();
+    var closestZipToMap = new Array;
+
     if(event.which == 13){
-      that.getPosition(input);
+      clearOverlays(); // clears all markers from map
+      var closestZips = new Array;
+      var zipsToMap;
+      var ajaxPromise = that.getModel().getPins();
+
+
+      var distance = 5;
+      $.ajax( {url:'https://www.zipcodeapi.com/rest/ZjnBaP5AUeunIaDuT0eUvcvorlV37bG7u4IFUNgO2LcKVQfPQuKmGfL7BGbISRPm/radius.json/'+input+'/'+distance+'/miles?minimal', method: 'GET'} )
+      .done(function(responses){
+        for(var i in responses.zip_codes){
+          closestZips.push(responses.zip_codes[i])
+        }
+
+          ajaxPromise.done(function(responses2){
+            zipsToMap = that.onePerZip(responses2);
+
+            for(var i = 0; i < zipsToMap.length; i++){
+              if(closestZips.includes(zipsToMap[i])){
+                closestZipToMap.push(zipsToMap[i])
+              }
+            }
+            that.geocodeAddress(that.geocoder, responses2, closestZipToMap)
+          })
+      })
+    that.getPosition(input);
     }
   })
 }
@@ -138,13 +226,13 @@ Controller.prototype.initMap = function() {
     zoom: 12,
     styles: this.getView().mapStyles()
   });
-
+  this.getCurrentPos();
 }
 
 Controller.prototype.initialize = function(){
   if(window.location.pathname == '/'){
     this.initMap();
-    this.handleInitPins();
+    // this.handleInitPins();
     this.findZip();
   }
 }

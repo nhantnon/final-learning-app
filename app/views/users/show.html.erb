@@ -16,7 +16,8 @@
                               <%= image_tag(@user.image.url(:medium), :class => "img-thumbnail img-responsive center-block") %>
                            </figure>
                            <div class="row">
-                                <a href="#" class="btn btn-green btn-block btn-compose-email">Send a Message</a>
+
+                                <a href="/messages/<%=params[:id]%>" id="chat-button" class="btn btn-green btn-block btn-compose-email">Send a Message</a>
 
                            </div>
                         </div>

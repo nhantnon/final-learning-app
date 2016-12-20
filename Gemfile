@@ -1,13 +1,15 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-ruby "2.2.2"
+ruby "2.2.4"
 # gem 'simplecov', :require => false, :group => :test
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'materialize-sass'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
+
+gem 'redis'
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'bootstrap_form'
@@ -32,7 +34,6 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'pg'
 gem 'rails_12factor'
 gem "jquery-slick-rails"
-gem 'themoviedb'
 gem 'faker'
 gem "paperclip", "~> 5.0.0"
 
