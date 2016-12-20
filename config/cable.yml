@@ -1,6 +1,6 @@
 production:
   adapter: redis
-  url: redis://localhost:6379/1
+  url: redis://redistogo:ac459aff6c1776b174c0f7e68d46684d@crestfish.redistogo.com:11128
 
 development:
   adapter: async
