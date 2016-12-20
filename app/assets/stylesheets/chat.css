@@ -1,0 +1,75 @@
+#chat-container {
+  height: 130px;
+  width: 80%;
+  overflow: scroll;
+  margin:0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #c4c4c4;
+  opacity: .8;
+  -webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.44);
+  -moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.44);
+  box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.44);
+  border-radius: 5px;
+}
+
+#chat-container > ul {
+  list-style: none
+}
+
+#message_content {
+  height: 70px;
+  width: 70%;
+  margin: 0 auto;
+}
+
+#message_form {
+  display: flex;
+  flex-direction: column;
+
+}
+
+#message_form > input[type = "submit"] {
+  width: 30%;
+  align-self: center;
+}
+
+/*#message-board li:nth-child(even) {
+  color: green;
+}*/
+
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 9px none #ffffff;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #808080;
+}
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 56px none #ffffff;
+  border-radius: 45px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #d8d7d9;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
