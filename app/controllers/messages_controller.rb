@@ -12,7 +12,8 @@ class MessagesController < ApplicationController
     if message.save
       ActionCable.server.broadcast 'chat_channel',
                                    content:  message.content,
-                                   username: message.sender.first_name
+                                   username: message.sender.first_name,
+                                   created_at: message.created_at
       # head :ok
     else
       redirect_to "/"
