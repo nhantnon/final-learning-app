@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
     root "homepage#index"
     get "/messages/new" => "messages#new"
-    post "messages" => "messages#create"
+    post "/messages" => "messages#create"
+    get "/messages" => "messages#chat"
 
     mount ActionCable.server, at: '/cable'
+
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
     get '/users/:id', to: 'users#show', as: 'user_show'

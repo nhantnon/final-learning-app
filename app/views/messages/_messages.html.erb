@@ -1,0 +1,5 @@
+<ul id="message-board">
+  <%Message.all.each do |message|%>
+    <li><%= message.sender.first_name%>: <%=message.content%></li>
+  <%end%>
+</ul>
