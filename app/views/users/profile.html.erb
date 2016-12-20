@@ -2,7 +2,7 @@
   <%= bootstrap_form_for(@user, url: user_update_path, html: {:class => "new_user", :multipart => true}) do |f| %>
   <h2 class="form-signin-heading">Edit your account</h2>
     <%= image_tag(@user.image.url(:thumb), :class => "img-thumbnail img-responsive center-block") %>
-    <%= f.file_field :image %>
+    <%= f.file_field :image, label: "Upload an image", help: "Image must be less than 2 megabytes" %>
     <%= f.text_field :first_name, autofocus: true %>
     <%= f.text_field :last_name, autofocus: true %>
     <%= f.text_field :location, autofocus: true %>
