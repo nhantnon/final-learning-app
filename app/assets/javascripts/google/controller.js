@@ -1,3 +1,12 @@
+var markersArray = [];
+
+function clearOverlays() {
+  for (var i = 0; i < markersArray.length; i++ ) {
+    markersArray[i].setMap(null);
+  }
+  markersArray.length = 0;
+}
+
 function Controller(){
   this._model = new Model();
   this._view = new View();
@@ -84,19 +93,19 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     var x = 0;
     this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
-        map.setCenter(results[0].geometry.location);
+        // map.setCenter(results[0].geometry.location);
         var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
           '<h2><a href="/searches/' + zips[x] + '">Take a look!</a><h2>'
 
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
+        console.log('hi');
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
     that.getCurrentPos();
   }
-
 }
 
 
@@ -118,7 +127,9 @@ Controller.prototype.getPosition = function(input){
 
 Controller.prototype.findZip = function(){
   var that = this;
+  if (document.getElementById('pac-input')){
   var inputBox = document.getElementById('pac-input');
+  }
 
   // Below code positions the input bar in the map
   // that.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputBox);
@@ -126,9 +137,41 @@ Controller.prototype.findZip = function(){
   $('#pac-input').keypress(function(event){
     var searchBox = new google.maps.places.SearchBox(inputBox);
     var input = $('#pac-input').val();
+    var closestZipToMap = new Array;
+
     if(event.which == 13){
+      clearOverlays(); // clears all markers from map
+      var closestZips = new Array;
+      var zipsToMap;
+      var ajaxPromise = that.getModel().getPins();
       that.getPosition(input);
+
+      var distance = 5;
+      $.ajax( {url:'https://www.zipcodeapi.com/rest/ZjnBaP5AUeunIaDuT0eUvcvorlV37bG7u4IFUNgO2LcKVQfPQuKmGfL7BGbISRPm/radius.json/'+input+'/'+distance+'/miles?minimal', method: 'GET'} )
+      .done(function(responses){
+        for(var i in responses.zip_codes){
+          closestZips.push(responses.zip_codes[i])
+        }
+
+          ajaxPromise.done(function(responses2){
+            zipsToMap = that.onePerZip(responses2);
+
+            for(var i = 0; i < zipsToMap.length; i++){
+              if(closestZips.includes(zipsToMap[i])){
+                closestZipToMap.push(zipsToMap[i])
+              }
+            }
+            that.geocodeAddress(that.geocoder, responses2, closestZipToMap)
+          })
+      })
+
+
+      // console.log("closestZips: " + closestZips);
+      // console.log("zipsToMap: " + zipsToMap);
+
     }
+
+
   })
 }
 
