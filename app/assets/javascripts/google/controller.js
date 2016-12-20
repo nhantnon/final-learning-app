@@ -99,12 +99,10 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
 
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
-        console.log('hi');
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
-    // that.getCurrentPos();
   }
 }
 
@@ -153,16 +151,42 @@ Controller.prototype.findZip = function(){
     .done(function(response){
       inputBox = (response.results[0].address_components[7].long_name);
       console.log(inputBox);
+
+
+      clearOverlays(); // clears all markers from map
+      var closestZips = new Array;
+      var zipsToMap;
+      var ajaxPromise = that.getModel().getPins();
+      var closestZipToMap = new Array;
+
+
+      var distance = 5;
+      $.ajax( {url:'https://www.zipcodeapi.com/rest/ZjnBaP5AUeunIaDuT0eUvcvorlV37bG7u4IFUNgO2LcKVQfPQuKmGfL7BGbISRPm/radius.json/'+inputBox+'/'+distance+'/miles?minimal', method: 'GET'} )
+      .done(function(responses){
+        for(var i in responses.zip_codes){
+          closestZips.push(responses.zip_codes[i])
+        }
+
+          ajaxPromise.done(function(responses2){
+            zipsToMap = that.onePerZip(responses2);
+
+            for(var i = 0; i < zipsToMap.length; i++){
+              if(closestZips.includes(zipsToMap[i])){
+                closestZipToMap.push(zipsToMap[i])
+              }
+            }
+            that.geocodeAddress(that.geocoder, responses2, closestZipToMap)
+          })
+      })
     })
   });
   }
-
 
   // Below code positions the input bar in the map
   // that.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputBox);
 
   $('#pac-input').keypress(function(event){
-    var searchBox = new google.maps.places.SearchBox(inputBox);
+
     var input = $('#pac-input').val();
     var closestZipToMap = new Array;
 
@@ -192,13 +216,7 @@ Controller.prototype.findZip = function(){
           })
       })
     that.getPosition(input);
-
-      // console.log("closestZips: " + closestZips);
-      // console.log("zipsToMap: " + zipsToMap);
-
     }
-
-
   })
 }
 
@@ -214,7 +232,7 @@ Controller.prototype.initMap = function() {
 Controller.prototype.initialize = function(){
   if(window.location.pathname == '/'){
     this.initMap();
-    this.handleInitPins();
+    // this.handleInitPins();
     this.findZip();
   }
 }
