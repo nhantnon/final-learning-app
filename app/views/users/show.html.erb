@@ -33,16 +33,28 @@
 
                <div class="bs-callout bs-callout-green">
                   <h4>Summary</h4>
-                  <p>
-                     Hi there.
-                  </p>
+                  <ul class="list-group">
+                      <%if @user.summary %>
+                          <p>
+                            <%=@user.summary%>
+                          </p>
+                      <%else%>
+                        <p class="list-group-item"><%=@user.first_name%> has not listed a summary</p>
+                      <%end%>
+                  </ul>
                </div>
 
                <div class="bs-callout bs-callout-green">
                   <h4>Interests</h4>
-                  <p>
-                     Machine Learning, Statistical Learning Theory, and Reinforcement Learning
-                  </p>
+                  <ul class="list-group">
+                      <%if @user.interests %>
+                          <p>
+                            <%=@user.interests%>
+                          </p>
+                      <%else%>
+                        <p class="list-group-item"><%=@user.first_name%> has not listed any interests</p>
+                      <%end%>
+                  </ul>
                </div>
 
                <div class="bs-callout bs-callout-green">
@@ -55,7 +67,7 @@
                           </li>
                         <%end%>
                       <%else%>
-                        <li class="list-group-item"> This user has not listed any skills</li>
+                        <li class="list-group-item"><%=@user.first_name%> has not listed any skills</li>
                       <%end%>
                   </ul>
                </div>
