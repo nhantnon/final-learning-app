@@ -104,7 +104,7 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
-    that.getCurrentPos();
+    // that.getCurrentPos();
   }
 }
 
@@ -125,11 +125,38 @@ Controller.prototype.getPosition = function(input){
   });
 }
 
+function returnCurrentZip(){
+  navigator.geolocation.getCurrentPosition( function(position) {
+    var pos = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '', method: "GET"})
+    .done(function(response){
+      return (response.results[0].address_components[7].long_name);
+    })
+  });
+}
+
 Controller.prototype.findZip = function(){
   var that = this;
-  if (document.getElementById('pac-input')){
-  var inputBox = document.getElementById('pac-input');
+  if (document.getElementById('pac-input').value){
+    var inputBox = document.getElementById('pac-input');
+  } else {
+    var inputBox;
+    navigator.geolocation.getCurrentPosition( function(position) {
+    var pos = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '', method: "GET"})
+    .done(function(response){
+      inputBox = (response.results[0].address_components[7].long_name);
+      console.log(inputBox);
+    })
+  });
   }
+
 
   // Below code positions the input bar in the map
   // that.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputBox);
@@ -144,7 +171,7 @@ Controller.prototype.findZip = function(){
       var closestZips = new Array;
       var zipsToMap;
       var ajaxPromise = that.getModel().getPins();
-      that.getPosition(input);
+
 
       var distance = 5;
       $.ajax( {url:'https://www.zipcodeapi.com/rest/ZjnBaP5AUeunIaDuT0eUvcvorlV37bG7u4IFUNgO2LcKVQfPQuKmGfL7BGbISRPm/radius.json/'+input+'/'+distance+'/miles?minimal', method: 'GET'} )
@@ -164,7 +191,7 @@ Controller.prototype.findZip = function(){
             that.geocodeAddress(that.geocoder, responses2, closestZipToMap)
           })
       })
-
+    that.getPosition(input);
 
       // console.log("closestZips: " + closestZips);
       // console.log("zipsToMap: " + zipsToMap);
@@ -181,7 +208,7 @@ Controller.prototype.initMap = function() {
     zoom: 12,
     styles: this.getView().mapStyles()
   });
-
+  this.getCurrentPos();
 }
 
 Controller.prototype.initialize = function(){
