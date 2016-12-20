@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
 
   def chat
     @messages = Message.where(sender_id: current_user.id, reciever_id: params[:reciever_id]).or(Message.where(sender_id: params[:reciever_id], reciever_id: current_user.id)).order(created_at: :asc)
-    # messages_two = 
+    # messages_two =
     # messages = messages_one + messages_two
     # @messages = messages.order(created_at: :asc)
     if request.xhr?
