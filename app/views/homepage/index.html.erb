@@ -1,4 +1,13 @@
 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+
+<select id="select-skill">
+  <option value="All">All</option>
+  <% @skills.each do |skill| %>
+    <option value="<%=skill.name%>"><%=skill.name%></option>
+  <% end %>
+</select>
+
+
 <div id="map"></div>
 
 <%= render "list"  %>
