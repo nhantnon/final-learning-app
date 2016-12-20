@@ -34,6 +34,7 @@ gem 'rails_12factor'
 gem "jquery-slick-rails"
 gem 'themoviedb'
 gem 'faker'
+gem "paperclip", "~> 5.0.0"
 
 gem 'shoulda-matchers', '~> 3.1', '>= 3.1.1'
 
