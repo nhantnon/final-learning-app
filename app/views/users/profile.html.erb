@@ -1,15 +1,23 @@
-<%= form_for @user, url: user_update_path do |f| %>
-  <%= f.text_field :first_name, autofocus: true %>
-  <%= f.text_field :last_name, autofocus: true %>
-  <%= f.date_field :dob, autofocus: true, label: "Birthday" %>
-  <%= f.text_field :location, autofocus: true %>
-  <%= f.email_field :email, autofocus: true %>
-  <div>
-    <% Skill.all.each do |skill| %>
-    <label>
-        <%= check_box_tag "user[skill_ids][]", skill.id, f.object.skills.include?(skill) %>
-        <%= skill.name %>
-    <% end %>
-  </div>
-  <%= f.submit "Update account info" %>
-<% end %>
+<div class="container">
+  <%= bootstrap_form_for(@user, url: user_update_path, html: {:class => "new_user", :multipart => true}) do |f| %>
+  <h2 class="form-signin-heading">Edit your account</h2>
+    <%= image_tag(@user.image.url(:thumb), :class => "img-thumbnail img-responsive center-block") %>
+    <%= f.file_field :image %>
+    <%= f.text_field :first_name, autofocus: true %>
+    <%= f.text_field :last_name, autofocus: true %>
+    <%= f.text_field :location, autofocus: true %>
+    <%= f.email_field :email, autofocus: true %>
+    <%= f.text_area :summary, autofocus: true %>
+    <%= f.text_area :interests, autofocus: true %>
+
+    <div>
+      <% Skill.all.each do |skill| %>
+      <label>
+          <%= check_box_tag "user[skill_ids][]", skill.id, f.object.skills.include?(skill) %>
+          <%= skill.name %>
+      <% end %>
+    </div>
+    <%= f.submit "Update" %>
+  <% end %>
+</div>
+
