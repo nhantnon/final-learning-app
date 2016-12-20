@@ -123,18 +123,29 @@ Controller.prototype.getPosition = function(input){
   });
 }
 
-function returnCurrentZip(){
-  navigator.geolocation.getCurrentPosition( function(position) {
-    var pos = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
-    $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '', method: "GET"})
-    .done(function(response){
-      return (response.results[0].address_components[7].long_name);
-    })
-  });
+// function returnCurrentZip(){
+//   navigator.geolocation.getCurrentPosition( function(position) {
+//     var pos = {
+//       lat: position.coords.latitude,
+//       lng: position.coords.longitude
+//     };
+//     $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '', method: "GET"})
+//     .done(function(response){
+//       return (response.results[0].address_components[7].long_name);
+//     })
+//   });
+// }
+
+
+
+function searchBySkill(input){
+  console.log("searching by skill");
+  if (input === "The Arts"){
+    console.log("well hello there");
+  }
+
 }
+
 
 Controller.prototype.findZip = function(){
   var that = this;
@@ -147,10 +158,10 @@ Controller.prototype.findZip = function(){
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
-    $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '', method: "GET"})
+    $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng, method: "GET"})
     .done(function(response){
       inputBox = (response.results[0].address_components[7].long_name);
-      console.log(inputBox);
+
 
 
       clearOverlays(); // clears all markers from map
@@ -161,8 +172,15 @@ Controller.prototype.findZip = function(){
 
 
       var distance = 5;
-      $.ajax( {url:'https://www.zipcodeapi.com/rest/ZjnBaP5AUeunIaDuT0eUvcvorlV37bG7u4IFUNgO2LcKVQfPQuKmGfL7BGbISRPm/radius.json/'+inputBox+'/'+distance+'/miles?minimal', method: 'GET'} )
+      $.ajax( {
+        method: 'GET',
+        // beforeSend: function(request){
+        //   request.setRequestHeader("Access-Control-Allow-Origin","*");
+        // },
+        url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
+      } )
       .done(function(responses){
+        // responses.addHeader("Access-Control-Allow-Origin","*")
         for(var i in responses.zip_codes){
           closestZips.push(responses.zip_codes[i])
         }
@@ -189,8 +207,10 @@ Controller.prototype.findZip = function(){
 
     var input = $('#pac-input').val();
     var closestZipToMap = new Array;
+    var skill_selected = document.getElementById("select-skill");
+    console.log(skill_selected);
 
-    if(event.which == 13){
+    if(event.which == 13 && skill_selected == "All"){
       clearOverlays(); // clears all markers from map
       var closestZips = new Array;
       var zipsToMap;
@@ -198,8 +218,15 @@ Controller.prototype.findZip = function(){
 
 
       var distance = 5;
-      $.ajax( {url:'https://www.zipcodeapi.com/rest/ZjnBaP5AUeunIaDuT0eUvcvorlV37bG7u4IFUNgO2LcKVQfPQuKmGfL7BGbISRPm/radius.json/'+input+'/'+distance+'/miles?minimal', method: 'GET'} )
+      $.ajax( {
+        method: 'GET',
+        // beforeSend: function(request){
+        //   request.setRequestHeader("Access-Control-Allow-Origin","*");
+        // },
+        url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+input+'/'+distance+'/miles?minimal'
+      } )
       .done(function(responses){
+        // responses.addHeader("Access-Control-Allow-Origin","*")
         for(var i in responses.zip_codes){
           closestZips.push(responses.zip_codes[i])
         }
@@ -216,6 +243,8 @@ Controller.prototype.findZip = function(){
           })
       })
     that.getPosition(input);
+    } else if (event.which == 13 && skill_selected != "All") {
+      console.log("Hello");
     }
   })
 }
