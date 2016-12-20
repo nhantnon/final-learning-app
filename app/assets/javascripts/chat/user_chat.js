@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $("#chat-button").on("click", function(event){
+  $(document).on("click", "#chat-button", function(event){
     event.preventDefault()
     var href = $("#chat-button").attr("href")
     var user_id = href.slice(10, (href.length))

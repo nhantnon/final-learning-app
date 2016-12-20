@@ -6,8 +6,9 @@
     <%= f.date_field :dob, autofocus: true, label: "Birthday" %>
     <%= f.text_field :location, autofocus: true %>
     <%= f.email_field :email, autofocus: true %>
-    <%= f.password_field :password, autocomplete: "off", placeholder: "Use at least 6 characters" %>
+    <%= f.password_field :password, autocomplete: "off", help: "Use at least 6 characters" %>
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
     <%= f.submit "Sign up" %>
     <p>Already have an account? <%= render "devise/shared/links" %></p>
 <% end %>
+
