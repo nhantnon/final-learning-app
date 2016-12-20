@@ -1,0 +1,8 @@
+<%=render partial: "messages"%>
+
+<%= form_for :message, :url => "/messages?reciever_id=#{params[:reciever_id]}" do |f| %>
+  <%= f.label :message %>:
+  <%= f.text_area :content %><br/>
+
+  <%= f.submit %>
+<% end %>
