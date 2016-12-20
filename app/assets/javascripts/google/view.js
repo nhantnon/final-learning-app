@@ -109,8 +109,10 @@ View.prototype.infoWindow = function(){
 }
 
 View.prototype.marker = function(resultsMap,result){
-  return new google.maps.Marker({
+  var marker = new google.maps.Marker({
     map: resultsMap,
     position: result.geometry.location
   });
+  markersArray.push(marker);
+  return marker;
 }
