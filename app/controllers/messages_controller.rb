@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
                                    created_at: message.created_at
       # head :ok
     else
-      redirect_to "/"
+      @errors = message.errors.full_messages
     end
 
   end

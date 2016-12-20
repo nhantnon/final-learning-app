@@ -23,5 +23,9 @@ $(document).ready(function(){
       return false
     }
   });
+
+  $(document).on("submit", "#message_form", function(){
+    $("#chat-container").animate({ scrollTop: $(document).height() }, "slow");
+  })
 });
 
