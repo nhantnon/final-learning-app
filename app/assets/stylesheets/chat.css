@@ -34,9 +34,9 @@
   align-self: center;
 }
 
-#message-board {
-
-}
+/*#message-board li:nth-child(even) {
+  color: green;
+}*/
 
 
 ::-webkit-scrollbar {
