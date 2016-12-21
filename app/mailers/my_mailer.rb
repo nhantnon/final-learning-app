@@ -1,5 +1,5 @@
 class MyMailer < ApplicationMailer
-  default from: "coryrmathis@gmail.com"
+  default from: ENV["gmail_account"]
   def welcome_email(user)
     @user = user
     mail(to: @user.email,

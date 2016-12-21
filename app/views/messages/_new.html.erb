@@ -1,8 +1,10 @@
+<div id="chat-container">
 <%=render partial: "messages"%>
+</div>
 
-<%= form_for :message, :url => "/messages?reciever_id=#{params[:reciever_id]}" do |f| %>
-  <%= f.label :message %>:
+<%= form_for :message, html: {id: "message_form"}, :url => "/messages?reciever_id=#{params[:reciever_id]}" do |f| %>
   <%= f.text_area :content %><br/>
 
   <input type="submit" value="Send Message">
 <% end %>
+
