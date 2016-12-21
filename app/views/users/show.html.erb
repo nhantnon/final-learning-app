@@ -1,10 +1,6 @@
 <script type="text/javascript"></script>
 
-<p><%= link_to "BACK TO MAP SEARCH", :root%></p>
-
-<% if @user == current_user %>
-   <p><%= link_to "Edit Profile", user_profile_edit_path %></p>
-<% end %>
+<p><%= link_to "Back to Map Results", :root%></p>
 
 <div class="container userInfo">
 <div class="row">
@@ -29,6 +25,9 @@
                               <li class="list-group-item"><i class="fa fa-map-marker"></i>  <%=@user.location%></li>
                               <li class="list-group-item"><i class="fa fa-envelope"></i> <%=@user.email%></li>
                            </ul>
+                           <% if @user == current_user %>
+                             <%= link_to 'Edit Profile', user_profile_edit_path, class: "btn btn-default"%>
+                           <% end %>
                         </div>
                      </div>
                   </div>
