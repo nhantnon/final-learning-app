@@ -1,0 +1,41 @@
+#list_popup {
+  transform: scale(0.8);
+}
+
+.popup_visible #list_popup {
+  transform: scale(.9);
+}
+
+#slide_background {
+  transition: all 0.3s 0.3s;
+}
+#login_popup,
+#slide_wrapper {
+  transition: all 0.3s ease-out;
+}
+#login_popup {
+  transform: translateX(0) translateY(-40%);
+}
+
+.popup_visible #login_popup {
+  transform: translateX(0) translateY(0);
+}
+
+#register_popup,
+#slide_wrapper {
+  transition: all 0.3s ease-out;
+}
+#register_popup {
+  transform: translateX(0) translateY(-40%);
+}
+
+.popup_visible #register_popup {
+  transform: translateX(0) translateY(0);
+}
+
+.popup_content{
+  background: #ffffff;
+  padding: 20px 40px;
+  border-radius: 10px;
+}
+
