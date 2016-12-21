@@ -10,28 +10,55 @@
   -webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.44);
   -moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.44);
   box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.44);
-  border-radius: 5px;
+  border-radius: 7px;
 }
 
 #message-board {
-  list-style: none
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  align-items: flex-start;
 }
 
 #message_content {
   height: 70px;
   width: 70%;
   margin: 0 auto;
+  border-radius: 5px;
 }
 
 #message_form {
   display: flex;
   flex-direction: column;
 
+
 }
 
 #message_form > input[type = "submit"] {
   width: 30%;
   align-self: center;
+  border-radius: 5px;
+}
+
+#user_one_message {
+  display: inline-block;
+  padding-right: 0;
+  margin: 8px;
+  background-color: #84D2F6;
+  border-radius: 5px
+}
+
+#user_two_message {
+  display: inline-block;
+  padding-right: 0;
+  margin: 5px;
+  background-color: #386FA4;
+  border-radius: 5px
+}
+
+.user_two_message  {
+  align-self: flex-end;
 }
 
 /*#message-board li:nth-child(even) {
