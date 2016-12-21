@@ -11,7 +11,7 @@ $(document).ready(function(){
     }).done(function(response){
       $("#chat-button").hide()
       $(".panel-heading").append(response)
-      $("#chat-container").animate({ scrollTop: $(document).height() }, "slow");
+      $("#chat-container").animate({ scrollTop: $("#message-board").height() }, "slow");
     })
   })
 
@@ -19,13 +19,13 @@ $(document).ready(function(){
     if(event.keyCode === 13){
       $("#message_form").submit()
       $("#message_content").val("");
-      $("#chat-container").animate({ scrollTop: $(document).height() }, "slow");
+      $("#chat-container").animate({ scrollTop: $("#message-board").height() }, "slow");
       return false
     }
   });
 
   $(document).on("submit", "#message_form", function(){
-    $("#chat-container").animate({ scrollTop: $(document).height() }, "slow");
+    $("#chat-container").animate({ scrollTop: $("#message-board").height() }, "slow");
   })
 });
 
