@@ -303,7 +303,7 @@ Controller.prototype.findZip = function(){
       var ajaxPromise = that.getModel().getPins();
 
 
-      var distance = 5;
+      var distance = 10;
       $.ajax( {
         method: 'GET',
         url:'https://www.zipcodeapi.com/rest/js-xajS0POOeO3ei2dGKgJSBq6k4NEdmrCUBVMCLAqZpueHwrngH79jxfEB2iPpJrjl/radius.json/'+input+'/'+distance+'/miles?minimal'
