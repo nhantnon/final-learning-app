@@ -1,5 +1,5 @@
-<div id="chat-container">
-<%=render partial: "messages"%>
+<div class="chat-container" >
+  <%=render partial: "messages"%>
 </div>
 
 <%= form_for :message, html: {id: "message_form"}, :url => "/messages?reciever_id=#{params[:reciever_id]}" do |f| %>
