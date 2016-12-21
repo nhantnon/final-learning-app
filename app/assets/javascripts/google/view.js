@@ -111,6 +111,7 @@ View.prototype.infoWindow = function(){
 View.prototype.marker = function(resultsMap,result){
   var marker = new google.maps.Marker({
     map: resultsMap,
+    class: 'my_popup_open',
     position: result.geometry.location
   });
   markersArray.push(marker);

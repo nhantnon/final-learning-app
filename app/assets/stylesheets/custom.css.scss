@@ -302,3 +302,16 @@ form .form-group {
    cursor: default;
 }
 
+#my_popup {
+  transform: scale(0.8);
+}
+
+.popup_visible #my_popup {
+  transform: scale(.9);
+}
+
+.popup_content{
+  background: #ffffff;
+  padding: 20px 40px;
+  border-radius: 10px;
+}

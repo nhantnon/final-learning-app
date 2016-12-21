@@ -62,8 +62,9 @@ Controller.prototype.onePerZip = function(responses){
 Controller.prototype.bindInfoWindow = function(marker, infowindow, html) {
   var that = this;
   marker.addListener('click', function(){
-    infowindow.setContent(html);
-    infowindow.open(that.map, this)
+
+      infowindow.setContent(html);
+      infowindow.open(that.map, this)
   })
 }
 
@@ -84,6 +85,23 @@ Controller.prototype.getCurrentPos = function(){
 }
 
 
+Controller.prototype.getPopUp = function(){
+  $('body').on('click','a.my_popup_open',function(event){
+    event.preventDefault();
+
+    var skill = $('#select-skill').val();
+    var url = $(this).find('a.my_popup_open').context.href;
+
+    $.ajax({
+      url: url+'?skill='+skill,
+      method: 'get'
+    })
+    .done(function(response){
+      $('#my_popup').html(response);
+    })
+  })
+}
+
 Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
   var currentPins = responses;
   var that = this;
@@ -95,7 +113,8 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
       if (status === 'OK') {
         // map.setCenter(results[0].geometry.location);
         var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
-          '<h2><a href="/searches/' + zips[x] + '">Take a look!</a><h2>'
+          '<h2><a class=my_popup_open href="/searches/' + zips[x] + '">Take a look!</a><h2>' +
+          "<a class= my_popup_open href='/'>overlay</a>"
 
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
@@ -207,9 +226,8 @@ Controller.prototype.findZip = function(){
 
     var input = $('#pac-input').val();
     var closestZipToMap = new Array;
-    var skill_selected = document.getElementById("select-skill");
+    var skill_selected = document.getElementById("select-skill").value;
     console.log(skill_selected);
-
     if(event.which == 13 && skill_selected == "All"){
       clearOverlays(); // clears all markers from map
       var closestZips = new Array;
@@ -263,5 +281,13 @@ Controller.prototype.initialize = function(){
     this.initMap();
     // this.handleInitPins();
     this.findZip();
+
   }
+    this.getPopUp();
+    $('#my_popup').popup({
+      opacity: 0.3,
+      transition: 'all 0.3s',
+      scrolllock: true
+      // color: '#EEEEEE'
+    });
 }

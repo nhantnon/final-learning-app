@@ -1,20 +1,22 @@
-<h1>Connect with these lifelong learners!</h1>
-<table>
-  <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Email</th>
-    <th>Location</th>
-    <th>Age</th>
-  </tr>
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.first_name %></td>
-    <td><%= user.last_name %></td>
-    <td><%= user.email %></td>
-    <td><%= user.location %></td>
-    <td><%= user.dob %></td>
-    <td><%= link_to 'Connect!', user_show_path(user) %></td>
-  </tr>
-<% end %>
-</table>
+<div id="learner-list">
+  <h1>Connect with these lifelong learners!</h1>
+  <table class='table'>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Location</th>
+      <th>Age</th>
+    </tr>
+  <% @user_select.each do |user| %>
+    <tr>
+      <td><%= user.first_name %></td>
+      <td><%= user.last_name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.location %></td>
+      <td><%= user.dob %></td>
+      <td><%= link_to 'Connect!', user_show_path(user) %></td>
+    </tr>
+  <% end %>
+  </table>
+</div>
