@@ -209,7 +209,7 @@ Controller.prototype.searchBySkill = function(skill){
   var distance = 5;
   $.ajax( {
     method: 'GET',
-    url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+input+'/'+distance+'/miles?minimal'
+    url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+input+'/'+distance+'/miles?minimal'
   } )
   .done(function(responses){
     for(var i in responses.zip_codes){
@@ -267,7 +267,7 @@ Controller.prototype.findZip = function(){
         var distance = 5;
         $.ajax( {
           method: 'GET',
-          url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
+          url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
         } )
         .done(function(responses){
           for(var i in responses.zip_codes){
@@ -364,19 +364,24 @@ Controller.prototype.initRegisterPopup = function(){
   });
 }
 
+Controller.prototype.loader = function(){
+  google.maps.event.addListenerOnce(this.map, 'idle', function(){
+    $('#map').hide();
+    $('#loader').removeClass('hide');
+  });
+
+  google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+    $('#map').show();
+    $('#loader').addClass('hide');
+  });
+}
+
 
 Controller.prototype.initialize = function(){
   if(window.location.pathname == '/'){
     this.initMap();
     this.findZip();
-
-    google.maps.event.addListenerOnce(this.map, 'idle', function(){
-      // do something only the first time the map is loaded
-      // console.log('loading');
-      $('#loader').removeClass('hide');
-      $('#loader').addClass('hide');
-    });
-
+    this.loader();
     this.initListPopup();
     this.getPopUp();
 
