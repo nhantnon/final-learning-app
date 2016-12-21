@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     if user_signed_in? && @user == current_user
       @user.update(account_update_params)
       if @user.save
-        redirect_to :root
+        redirect_to user_show_path
       end
     else
       @errors = @user.errors.full_messages
