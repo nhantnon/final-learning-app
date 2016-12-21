@@ -31,7 +31,7 @@ Controller.prototype.handleInitPins = function(){
   })
 }
 
-Controller.prototype.returnUserByZip = function(responses, zip){
+Controller.prototype.returnUserByZip = function(responses, zip, skill){
   var users = []
   responses.forEach(function(user){
     if(user.location === zip){
@@ -111,7 +111,6 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     var x = 0;
     this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
-        // map.setCenter(results[0].geometry.location);
         var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
           '<h2><a class=my_popup_open href="/searches/' + zips[x] + '">Take a look!</a><h2>' +
           "<a class= my_popup_open href='/'>overlay</a>"
@@ -157,13 +156,47 @@ Controller.prototype.getPosition = function(input){
 
 
 
-function searchBySkill(input){
-  console.log("searching by skill");
-  if (input === "The Arts"){
-    console.log("well hello there");
+Controller.prototype.searchBySkill = function(skill){
+  var that = this;
+  console.log("searching by skill...");
+  console.log(skill);
+  var input = $('#pac-input').val();
+  var closestZipToMap = new Array;
+  var skill_selected = document.getElementById("select-skill").value;
+  clearOverlays(); // clears all markers from map
+  var closestZips = new Array;
+  var zipsToMap;
+  var ajaxPromise = that.getModel().getPinsBySkill(formatSkill(skill));
+  function formatSkill(skill){
+    return {skill: skill};
   }
 
+  var distance = 5;
+  $.ajax( {
+    method: 'GET',
+    url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+input+'/'+distance+'/miles?minimal'
+  } )
+  .done(function(responses){
+    for(var i in responses.zip_codes){
+      closestZips.push(responses.zip_codes[i])
+    }
+
+      ajaxPromise.done(function(responses2){
+        zipsToMap = that.onePerZip(responses2);
+        console.log(zipsToMap);
+
+        for(var i = 0; i < zipsToMap.length; i++){
+          if(closestZips.includes(zipsToMap[i])){
+            closestZipToMap.push(zipsToMap[i])
+          }
+        }
+        that.geocodeAddress(that.geocoder, responses2, closestZipToMap)
+      })
+  })
+  that.getPosition(input);
 }
+
+
 
 
 Controller.prototype.findZip = function(){
@@ -193,13 +226,9 @@ Controller.prototype.findZip = function(){
       var distance = 5;
       $.ajax( {
         method: 'GET',
-        // beforeSend: function(request){
-        //   request.setRequestHeader("Access-Control-Allow-Origin","*");
-        // },
-        url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
+        url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
       } )
       .done(function(responses){
-        // responses.addHeader("Access-Control-Allow-Origin","*")
         for(var i in responses.zip_codes){
           closestZips.push(responses.zip_codes[i])
         }
@@ -219,16 +248,14 @@ Controller.prototype.findZip = function(){
   });
   }
 
-  // Below code positions the input bar in the map
-  // that.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputBox);
-
   $('#pac-input').keypress(function(event){
 
     var input = $('#pac-input').val();
     var closestZipToMap = new Array;
     var skill_selected = document.getElementById("select-skill").value;
-    console.log(skill_selected);
-    if(event.which == 13 && skill_selected == "All"){
+
+
+    if(event.which == 13 && skill_selected === "All"){
       clearOverlays(); // clears all markers from map
       var closestZips = new Array;
       var zipsToMap;
@@ -238,13 +265,9 @@ Controller.prototype.findZip = function(){
       var distance = 5;
       $.ajax( {
         method: 'GET',
-        // beforeSend: function(request){
-        //   request.setRequestHeader("Access-Control-Allow-Origin","*");
-        // },
-        url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+input+'/'+distance+'/miles?minimal'
+        url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+input+'/'+distance+'/miles?minimal'
       } )
       .done(function(responses){
-        // responses.addHeader("Access-Control-Allow-Origin","*")
         for(var i in responses.zip_codes){
           closestZips.push(responses.zip_codes[i])
         }
@@ -262,7 +285,7 @@ Controller.prototype.findZip = function(){
       })
     that.getPosition(input);
     } else if (event.which == 13 && skill_selected != "All") {
-      console.log("Hello");
+      that.searchBySkill(skill_selected);
     }
   })
 }

@@ -1,9 +1,5 @@
 <p><%= link_to "BACK TO MAP SEARCH", :root%></p>
 
-<% if @user == current_user %>
-  <p><%= link_to "Edit Profile", user_profile_edit_path %></p>
-<% end %>
-
 <div class="container userInfo">
 <div class="row">
     <div class="col-sm-12">
@@ -17,7 +13,7 @@
                            </figure>
                            <div class="row">
 
-                                <a href="/messages/<%=params[:id]%>" id="chat-button" class="btn btn-green btn-block btn-compose-email">Send a Message</a>
+                                <a href="/messages/<%=params[:id]%>" id="chat-button" class="btn btn-green btn-block btn-compose-email">Chat With <%=@user.first_name  %></a>
 
                            </div>
                         </div>

@@ -11,7 +11,21 @@ $(document).ready(function(){
     }).done(function(response){
       $("#chat-button").hide()
       $(".panel-heading").append(response)
+      $("#chat-container").animate({ scrollTop: $(document).height() }, "slow");
     })
+  })
+
+  $(document).on("keyup", "#message_content", function(event){
+    if(event.keyCode === 13){
+      $("#message_form").submit()
+      $("#message_content").val("");
+      $("#chat-container").animate({ scrollTop: $(document).height() }, "slow");
+      return false
+    }
+  });
+
+  $(document).on("submit", "#message_form", function(){
+    $("#chat-container").animate({ scrollTop: $(document).height() }, "slow");
   })
 });
 
