@@ -23,6 +23,9 @@ p, div {
   z-index: 20;
 }
 
+.navbar-brand{
+  font-size: 28px;
+}
 
 .navbar-wrapper > .container {
   padding-right: 0;
@@ -31,6 +34,7 @@ p, div {
 .navbar-wrapper .navbar {
   padding-right: 15px;
   padding-left: 15px;
+  font-size: 20px;
 }
 .navbar-wrapper .navbar .container {
   width: auto;
@@ -209,8 +213,9 @@ p, div {
 
 /*   */
 
-body{margin-top:20px;
-background:#386FA4;
+body {
+  margin-top:20px;
+  background:#386FA4;
 }
 
 .btn-compose-email {
