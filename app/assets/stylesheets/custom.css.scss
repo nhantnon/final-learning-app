@@ -181,6 +181,19 @@ p, div {
   border-color: #53A3CD;
 }
 
+#edit-note {
+
+    background: #fdfd72;
+    text-align: center;
+    line-height: 2.5;
+    overflow: hidden; 
+}
+
+.edit_user input[type="file"] {
+  margin: auto;
+  text-align: center;
+}
+
 
 @media (min-width: 768px) {
   /* Navbar positioning foo */
