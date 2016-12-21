@@ -12,6 +12,7 @@
     <script src="https://use.fontawesome.com/7837c0b485.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzWibWWs0iuPjnnwnaOpkQvVH3LhTeiIE&libraries=places">
     </script>
+    <meta name="turbolinks-cache-control" content="no-cache">
     <%= action_cable_meta_tag %>
 </head>
 <body>
@@ -38,8 +39,8 @@
               <li><a href="/users/<%=current_user.id%>"><%= "#{current_user.first_name} #{current_user.last_name}" %></a></li>
               <li><a data-method="delete" href="/users/sign_out">Logout</a></li>
             <% else %>
-              <li><a href="/users/sign_in">Login</a></li>
-              <li><a href="/users/sign_up">Sign Up</a></li>
+              <li><a class='login_popup_open' id="login-link" href="/users/sign_in">Login</a></li>
+              <li><a class='register_popup_open' id="register-link" href="/users/sign_up">Sign Up</a></li>
             <% end %>
           </ul>
         </div>

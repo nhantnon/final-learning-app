@@ -19,4 +19,7 @@
 
 $(document).on('turbolinks:load', function() {
   new Controller().initialize();
+
+
+
 })

@@ -86,21 +86,55 @@ Controller.prototype.getCurrentPos = function(){
 
 
 Controller.prototype.getPopUp = function(){
-  $('body').on('click','a.my_popup_open',function(event){
+  $(document).on('click','a.list_popup_open',function(event){
     event.preventDefault();
-
     var skill = $('#select-skill').val();
-    var url = $(this).find('a.my_popup_open').context.href;
+    var url = $(this).find('a.list_popup_open').context.href;
 
     $.ajax({
       url: url+'?skill='+skill,
       method: 'get'
     })
     .done(function(response){
-      $('#my_popup').html(response);
+      $('#list_popup').html(response);
     })
   })
 }
+
+Controller.prototype.getLoginPopUp = function(){
+  $(document).on('click','a#login-link',function(event){
+    event.preventDefault();
+    var url = $(this).attr('href');
+    $.ajax({
+      url: url,
+      method: 'get'
+    })
+    .done(function(response){
+      var array = $.parseHTML(response);
+      var result = $(array).filter("#login-pad")[0];
+
+      $('#login_popup').html(result);
+    })
+  })
+}
+
+Controller.prototype.getRegisterPopUp = function(){
+  $(document).on('click','a#register-link',function(event){
+    event.preventDefault();
+    var url = $(this).attr('href');
+    $.ajax({
+      url: url,
+      method: 'get'
+    })
+    .done(function(response){
+      var array = $.parseHTML(response);
+      var result = $(array).filter("#register-pad")[0];
+      console.log(result)
+      $('#register_popup').html(result);
+    })
+  })
+}
+
 
 Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
   var currentPins = responses;
@@ -112,8 +146,7 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
         var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
-          '<h2><a class=my_popup_open href="/searches/' + zips[x] + '">Take a look!</a><h2>' +
-          "<a class= my_popup_open href='/'>overlay</a>"
+          '<h2><a class=list_popup_open href="/searches/' + zips[x] + '">Take a look!</a><h2>'
 
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
@@ -299,18 +332,45 @@ Controller.prototype.initMap = function() {
   this.getCurrentPos();
 }
 
+Controller.prototype.initListPopup = function(){
+  $('#list_popup').popup({
+    opacity: 0.3,
+    transition: 'all 0.3s',
+    scrolllock: true
+  });
+}
+
+Controller.prototype.initLogInPopup = function(){
+  $('#login_popup').popup({
+    outline: true, // optional
+    focusdelay: 400, // optional
+    vertical: 'top' //optional
+  });
+}
+
+Controller.prototype.initRegisterPopup = function(){
+  $('#register_popup').popup({
+    outline: true, // optional
+    focusdelay: 400, // optional
+    vertical: 'top' //optional
+  });
+}
+
+
 Controller.prototype.initialize = function(){
   if(window.location.pathname == '/'){
     this.initMap();
     // this.handleInitPins();
     this.findZip();
 
-  }
+    this.initListPopup();
     this.getPopUp();
-    $('#my_popup').popup({
-      opacity: 0.3,
-      transition: 'all 0.3s',
-      scrolllock: true
-      // color: '#EEEEEE'
-    });
+
+    this.initLogInPopup();
+    this.getLoginPopUp();
+
+    this.initRegisterPopup();
+    this.getRegisterPopUp();
+  }
+
 }
