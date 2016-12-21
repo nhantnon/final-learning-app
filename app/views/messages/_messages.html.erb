@@ -1,5 +1,9 @@
 <ul id="message-board" data-chatroom="<%=current_user.id%>_<%=params[:reciever_id]%>">
   <%@messages.each do |message|%>
-    <li><b><%= message.sender.first_name%></b>: <%=message.content%></li>
+    <%if message.sender == current_user%>
+      <li class="user_one_message"><div id="user_one_message"><b><%= message.sender.first_name%></b>: <%=message.content%></div></li>
+    <%else%>
+      <li class="user_two_message"><div id="user_two_message"><b><%= message.sender.first_name%></b>: <%=message.content%></div></li>
+    <%end%>
   <%end%>
 </ul>
