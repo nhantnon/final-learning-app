@@ -247,46 +247,46 @@ Controller.prototype.findZip = function(){
   } else {
     var inputBox;
     navigator.geolocation.getCurrentPosition( function(position) {
-    var pos = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
-    $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng, method: "GET"})
-    .done(function(response){
-      inputBox = (response.results[0].address_components[7].long_name);
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      $.ajax({url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng, method: "GET"})
+      .done(function(response){
+        inputBox = (response.results[0].address_components[7].long_name);
 
 
 
-      clearOverlays(); // clears all markers from map
-      var closestZips = new Array;
-      var zipsToMap;
-      var ajaxPromise = that.getModel().getPins();
-      var closestZipToMap = new Array;
+        clearOverlays(); // clears all markers from map
+        var closestZips = new Array;
+        var zipsToMap;
+        var ajaxPromise = that.getModel().getPins();
+        var closestZipToMap = new Array;
 
 
-      var distance = 5;
-      $.ajax( {
-        method: 'GET',
-        url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
-      } )
-      .done(function(responses){
-        for(var i in responses.zip_codes){
-          closestZips.push(responses.zip_codes[i])
-        }
+        var distance = 5;
+        $.ajax( {
+          method: 'GET',
+          url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
+        } )
+        .done(function(responses){
+          for(var i in responses.zip_codes){
+            closestZips.push(responses.zip_codes[i])
+          }
 
-          ajaxPromise.done(function(responses2){
-            zipsToMap = that.onePerZip(responses2);
+            ajaxPromise.done(function(responses2){
+              zipsToMap = that.onePerZip(responses2);
 
-            for(var i = 0; i < zipsToMap.length; i++){
-              if(closestZips.includes(zipsToMap[i])){
-                closestZipToMap.push(zipsToMap[i])
+              for(var i = 0; i < zipsToMap.length; i++){
+                if(closestZips.includes(zipsToMap[i])){
+                  closestZipToMap.push(zipsToMap[i])
+                }
               }
-            }
-            that.geocodeAddress(that.geocoder, responses2, closestZipToMap)
-          })
+              that.geocodeAddress(that.geocoder, responses2, closestZipToMap)
+            })
+        })
       })
-    })
-  });
+    });
   }
 
   $('#pac-input').keypress(function(event){
@@ -364,13 +364,24 @@ Controller.prototype.initRegisterPopup = function(){
   });
 }
 
+Controller.prototype.loader = function(){
+  google.maps.event.addListenerOnce(this.map, 'idle', function(){
+    $('#map').hide();
+    $('#loader').removeClass('hide');
+  });
+
+  google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+    $('#map').show();
+    $('#loader').addClass('hide');
+  });
+}
+
 
 Controller.prototype.initialize = function(){
   if(window.location.pathname == '/'){
     this.initMap();
-    // this.handleInitPins();
     this.findZip();
-
+    this.loader();
     this.initListPopup();
     this.getPopUp();
 
