@@ -1,5 +1,5 @@
 
-$navbar-default-bg: #563D7C;
+$navbar-default-bg: #133C55;
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
@@ -23,6 +23,9 @@ p, div {
   z-index: 20;
 }
 
+.navbar-brand{
+  font-size: 28px;
+}
 
 .navbar-wrapper > .container {
   padding-right: 0;
@@ -31,9 +34,11 @@ p, div {
 .navbar-wrapper .navbar {
   padding-right: 15px;
   padding-left: 15px;
+  font-size: 20px;
 }
 .navbar-wrapper .navbar .container {
   width: auto;
+  background-color: #133C55;
 }
 
 .footer {
@@ -41,6 +46,7 @@ p, div {
   margin-top: 45px;
   padding-top: 10px;
   padding-bottom: 10px;
+  background-color: #59A5D8
 }
 
 #pac-input {
@@ -105,7 +111,18 @@ p, div {
         padding-left: 10px;
       }
 
-
+.map_btn {
+  background-color: #91E5F6;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
 .new_user {
   max-width: 360px;
@@ -181,9 +198,10 @@ p, div {
 
   /* The navbar becomes detached from the top, so we round the corners */
   .navbar-wrapper .navbar {
-    border-radius: 4px;
+    border-radius: 0px;
   }
 }
+
 
 @media (min-width: 992px) {
   .featurette-heading {
@@ -195,8 +213,9 @@ p, div {
 
 /*   */
 
-body{margin-top:20px;
-background:#eee;
+body {
+  margin-top:20px;
+  background:#386FA4;
 }
 
 .btn-compose-email {
