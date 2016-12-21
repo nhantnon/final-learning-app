@@ -1,5 +1,5 @@
 <ul id="message-board" data-chatroom="<%=current_user.id%>_<%=params[:reciever_id]%>">
   <%@messages.each do |message|%>
-    <li><i><%=message.created_at.strftime("%b, %e, %Y %k:%M%p")%> </i><%= message.sender.first_name%>: <%=message.content%></li>
+    <li><b><%= message.sender.first_name%></b>: <%=message.content%></li>
   <%end%>
 </ul>
