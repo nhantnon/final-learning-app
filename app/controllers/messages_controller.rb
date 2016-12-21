@@ -13,7 +13,9 @@ class MessagesController < ApplicationController
       ActionCable.server.broadcast 'chat_channel',
                                    content:  message.content,
                                    username: message.sender.first_name,
-                                   created_at: message.created_at
+                                   created_at: message.created_at,
+                                   sender: message.sender,
+                                   reciever: message.reciever 
       # head :ok
     else
       @errors = message.errors.full_messages
