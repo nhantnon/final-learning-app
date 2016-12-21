@@ -298,7 +298,7 @@ Controller.prototype.findZip = function(){
       var distance = 5;
       $.ajax( {
         method: 'GET',
-        url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+input+'/'+distance+'/miles?minimal'
+        url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+input+'/'+distance+'/miles?minimal'
       } )
       .done(function(responses){
         for(var i in responses.zip_codes){
