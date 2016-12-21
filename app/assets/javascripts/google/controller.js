@@ -62,8 +62,9 @@ Controller.prototype.onePerZip = function(responses){
 Controller.prototype.bindInfoWindow = function(marker, infowindow, html) {
   var that = this;
   marker.addListener('click', function(){
-    infowindow.setContent(html);
-    infowindow.open(that.map, this)
+
+      infowindow.setContent(html);
+      infowindow.open(that.map, this)
   })
 }
 
@@ -84,6 +85,57 @@ Controller.prototype.getCurrentPos = function(){
 }
 
 
+Controller.prototype.getPopUp = function(){
+  $(document).on('click','a.list_popup_open',function(event){
+    event.preventDefault();
+    var skill = $('#select-skill').val();
+    var url = $(this).find('a.list_popup_open').context.href;
+
+    $.ajax({
+      url: url+'?skill='+skill,
+      method: 'get'
+    })
+    .done(function(response){
+      $('#list_popup').html(response);
+    })
+  })
+}
+
+Controller.prototype.getLoginPopUp = function(){
+  $(document).on('click','a#login-link',function(event){
+    event.preventDefault();
+    var url = $(this).attr('href');
+    $.ajax({
+      url: url,
+      method: 'get'
+    })
+    .done(function(response){
+      var array = $.parseHTML(response);
+      var result = $(array).filter("#login-pad")[0];
+
+      $('#login_popup').html(result);
+    })
+  })
+}
+
+Controller.prototype.getRegisterPopUp = function(){
+  $(document).on('click','a#register-link',function(event){
+    event.preventDefault();
+    var url = $(this).attr('href');
+    $.ajax({
+      url: url,
+      method: 'get'
+    })
+    .done(function(response){
+      var array = $.parseHTML(response);
+      var result = $(array).filter("#register-pad")[0];
+      console.log(result)
+      $('#register_popup').html(result);
+    })
+  })
+}
+
+
 Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
   var currentPins = responses;
   var that = this;
@@ -94,7 +146,7 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
         var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
-          '<h2><a href="/searches/' + zips[x] + '">Take a look!</a><h2>'
+          '<h2><a class=list_popup_open href="/searches/' + zips[x] + '">Take a look!</a><h2>'
 
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
@@ -229,14 +281,12 @@ Controller.prototype.findZip = function(){
   });
   }
 
-  // Below code positions the input bar in the map
-  // that.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputBox);
-
   $('#pac-input').keypress(function(event){
 
     var input = $('#pac-input').val();
     var closestZipToMap = new Array;
     var skill_selected = document.getElementById("select-skill").value;
+
 
     if(event.which == 13 && skill_selected === "All"){
       clearOverlays(); // clears all markers from map
@@ -251,7 +301,6 @@ Controller.prototype.findZip = function(){
         url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+input+'/'+distance+'/miles?minimal'
       } )
       .done(function(responses){
-        // responses.addHeader("Access-Control-Allow-Origin","*")
         for(var i in responses.zip_codes){
           closestZips.push(responses.zip_codes[i])
         }
@@ -283,10 +332,45 @@ Controller.prototype.initMap = function() {
   this.getCurrentPos();
 }
 
+Controller.prototype.initListPopup = function(){
+  $('#list_popup').popup({
+    opacity: 0.3,
+    transition: 'all 0.3s',
+    scrolllock: true
+  });
+}
+
+Controller.prototype.initLogInPopup = function(){
+  $('#login_popup').popup({
+    outline: true, // optional
+    focusdelay: 400, // optional
+    vertical: 'top' //optional
+  });
+}
+
+Controller.prototype.initRegisterPopup = function(){
+  $('#register_popup').popup({
+    outline: true, // optional
+    focusdelay: 400, // optional
+    vertical: 'top' //optional
+  });
+}
+
+
 Controller.prototype.initialize = function(){
   if(window.location.pathname == '/'){
     this.initMap();
     // this.handleInitPins();
     this.findZip();
+
+    this.initListPopup();
+    this.getPopUp();
+
+    this.initLogInPopup();
+    this.getLoginPopUp();
+
+    this.initRegisterPopup();
+    this.getRegisterPopUp();
   }
+
 }
