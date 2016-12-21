@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get '/users/:id/edit', to: 'users#profile', as: 'user_profile_edit'
     patch '/users/:id', to: 'users#update', as: 'user_update'
     get '/searches/:zip', to: 'searches#show'
+    get '/users_skill', to: 'homepage#users_skill'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
