@@ -14,8 +14,9 @@
                               <%= image_tag(@user.image.url(:medium), :class => "img-thumbnail img-responsive center-block") %>
                            </figure>
                            <div class="row">
-
+                                <%if user_signed_in? && current_user != @user%>
                                 <a href="/messages/<%=params[:id]%>" id="chat-button" class="btn btn-green btn-block btn-compose-email">Chat With <%=@user.first_name  %></a>
+                                <%end%>
 
                            </div>
                         </div>
