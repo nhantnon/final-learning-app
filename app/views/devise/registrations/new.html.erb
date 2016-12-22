@@ -10,7 +10,14 @@
         <%= f.email_field :email, autofocus: true %>
         <%= f.password_field :password, autocomplete: "off", help: "Use at least 6 characters" %>
         <%= f.password_field :password_confirmation, autocomplete: "off" %>
-        <%= f.submit "Sign up" %>
+
+        <div id='register-error' class="alert alert-danger hide" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          <span class="register-error-msg"></span>
+        </div>
+
+        <%= f.submit "Sign up", id: "register-button" %>
         <p>Already have an account? <%= render "devise/shared/links" %></p>
     <% end %>
   </div>
