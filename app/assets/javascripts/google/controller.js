@@ -72,17 +72,25 @@ Controller.prototype.bindInfoWindow = function(marker, infowindow, html) {
 Controller.prototype.getCurrentPos = function(){
   var that = this;
   var map = this.map;
-  if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition( function(position) {
       var pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      console.log(pos)
       map.setCenter(pos);
       map.setZoom(12);
-    });
+    }, function(position){
+      var pos = {
+        lat: 39.8282,
+        lng: -98.5795
+      };
+      console.log(pos)
+      map.setCenter(pos);
+      map.setZoom(4);
+  })
   }
-}
+
 
 
 Controller.prototype.getPopUp = function(){
@@ -196,7 +204,7 @@ Controller.prototype.searchBySkill = function(skill){
   var that = this;
   console.log("searching by skill...");
   console.log(skill);
-  var input = $('#pac-input').val();
+  var input = $('#search-input').val();
   var closestZipToMap = new Array;
   var skill_selected = document.getElementById("select-skill").value;
   clearOverlays(); // clears all markers from map
@@ -243,8 +251,8 @@ Controller.prototype.closePopUp = function(){
 
 Controller.prototype.findZip = function(){
   var that = this;
-  if (document.getElementById('pac-input').value){
-    var inputBox = document.getElementById('pac-input');
+  if (document.getElementById('search-input').value){
+    var inputBox = document.getElementById('search-input');
   } else {
     var inputBox;
     navigator.geolocation.getCurrentPosition( function(position) {
@@ -290,9 +298,9 @@ Controller.prototype.findZip = function(){
     });
   }
 
-  $('#pac-input').keypress(function(event){
+  $('#search-input').keypress(function(event){
 
-    var input = $('#pac-input').val();
+    var input = $('#search-input').val();
     var closestZipToMap = new Array;
     var skill_selected = document.getElementById("select-skill").value;
 
@@ -366,11 +374,13 @@ Controller.prototype.initRegisterPopup = function(){
   });
 }
 
-Controller.prototype.loader = function(){
-  google.maps.event.addListenerOnce(this.map, 'idle', function(){
+Controller.prototype.beforeLoader = function(){
+  // google.maps.event.addListenerOnce(this.map, 'idle', function(){
     $('.scene').removeClass('hide');
-  });
+  // });
+}
 
+Controller.prototype.afterLoader = function(){
   google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
     $('.scene').addClass('hide');
   });
@@ -381,7 +391,8 @@ Controller.prototype.initialize = function(){
   if(window.location.pathname == '/'){
     this.initMap();
     this.findZip();
-    this.loader();
+    this.beforeLoader();
+    this.afterLoader();
     this.initListPopup();
     this.getPopUp();
   }
@@ -392,3 +403,4 @@ Controller.prototype.initialize = function(){
   this.closePopUp();
 
 }
+
