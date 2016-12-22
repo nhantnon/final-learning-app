@@ -304,7 +304,6 @@ Controller.prototype.findZip = function(){
     var closestZipToMap = new Array;
     var skill_selected = document.getElementById("select-skill").value;
 
-
     if(event.which == 13 && skill_selected === "All"){
       clearOverlays(); // clears all markers from map
       var closestZips = new Array;
@@ -338,7 +337,53 @@ Controller.prototype.findZip = function(){
       that.searchBySkill(skill_selected);
     }
   })
+
+
+
+
+
+  $("#submit-skill").on("click", function(event){
+  var input = $('#search-input').val();
+  var closestZipToMap = new Array;
+  var skill_selected = document.getElementById("select-skill").value;
+  
+  if (skill_selected === "All"){
+      clearOverlays(); // clears all markers from map
+      var closestZips = new Array;
+      var zipsToMap;
+      var ajaxPromise = that.getModel().getPins();
+
+
+      var distance = 5;
+      $.ajax( {
+        method: 'GET',
+        url:'https://www.zipcodeapi.com/rest/js-xajS0POOeO3ei2dGKgJSBq6k4NEdmrCUBVMCLAqZpueHwrngH79jxfEB2iPpJrjl/radius.json/'+input+'/'+distance+'/miles?minimal'
+      } )
+      .done(function(responses){
+        for(var i in responses.zip_codes){
+          closestZips.push(responses.zip_codes[i])
+        }
+
+          ajaxPromise.done(function(responses2){
+            zipsToMap = that.onePerZip(responses2);
+
+            for(var i = 0; i < zipsToMap.length; i++){
+              if(closestZips.includes(zipsToMap[i])){
+                closestZipToMap.push(zipsToMap[i])
+              }
+            }
+            that.geocodeAddress(that.geocoder, responses2, closestZipToMap)
+          })
+      })
+    that.getPosition(input);
+    } else if (skill_selected != "All") {
+      that.searchBySkill(skill_selected);
+    }
+  })
 }
+
+
+
 
 Controller.prototype.initMap = function() {
   var that = this;
