@@ -11,7 +11,16 @@ p, div {
 }
 
 .yield-box {
-  padding-top: 40px;
+  padding-top: 50px;
+}
+
+.search-form {
+  padding-top: 10px;
+  position: absolute;
+  z-index: 99;
+    height: 50%;
+  width: 100%;
+  margin: 0 auto 0 auto;
 }
 
 
@@ -49,22 +58,6 @@ p, div {
   background-color: #59A5D8
 }
 
-#pac-input {
-  background-color: #fff;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 300px;
-}
-
-
-#pac-input:focus {
-  border-color: #4d90fe;
-}
-
 .pac-container {
   font-family: Roboto;
 }
@@ -98,7 +91,7 @@ p, div {
         padding: 0;
       }
       #floating-panel {
-        position: absolute;
+        position: relative;
         top: 10px;
         left: 25%;
         z-index: 5;
@@ -341,3 +334,4 @@ form .form-group {
    pointer-events: none;
    cursor: default;
 }
+
