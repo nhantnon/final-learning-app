@@ -96,18 +96,18 @@ Controller.prototype.getCurrentPos = function(){
 Controller.prototype.getPopUp = function(){
   $(document).on('click','a.list_popup_open',function(event){
     event.preventDefault();
-    // var skill = $('#select-skill').val();
-    // var url = $(this).find('a.list_popup_open').context.href;
-    // // $('#list_popup').addClass('hide');
-    // $.ajax({
-    //   url: url+'?skill='+skill,
-    //   method: 'get'
-    // })
-    // .done(function(response){
-    //
-    //   $('#list_popup').html(response);
-    //   // $('#list_popup').removeClass('hide');
-    // })
+    var skill = $('#select-skill').val();
+    var url = $(this).find('a.list_popup_open').context.href;
+    // $('#list_popup').addClass('hide');
+    $.ajax({
+      url: url+'?skill='+skill,
+      method: 'get'
+    })
+    .done(function(response){
+
+      $('#list_popup').html(response);
+      // $('#list_popup').removeClass('hide');
+    })
   })
 }
 
