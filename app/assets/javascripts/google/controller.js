@@ -374,11 +374,13 @@ Controller.prototype.initRegisterPopup = function(){
   });
 }
 
-Controller.prototype.loader = function(){
-  google.maps.event.addListenerOnce(this.map, 'idle', function(){
+Controller.prototype.beforeLoader = function(){
+  // google.maps.event.addListenerOnce(this.map, 'idle', function(){
     $('.scene').removeClass('hide');
-  });
+  // });
+}
 
+Controller.prototype.afterLoader = function(){
   google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
     $('.scene').addClass('hide');
   });
@@ -389,7 +391,8 @@ Controller.prototype.initialize = function(){
   if(window.location.pathname == '/'){
     this.initMap();
     this.findZip();
-    this.loader();
+    this.beforeLoader();
+    this.afterLoader();
     this.initListPopup();
     this.getPopUp();
   }
