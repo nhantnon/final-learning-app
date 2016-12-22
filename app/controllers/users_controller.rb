@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   def show
     puts params.inspect
     @user = User.find(params[:id])
+    @recent_contacts = @user.recent_contacts
   end
 
   def profile
