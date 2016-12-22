@@ -55,8 +55,14 @@
 <div class="yield-box"></div>
 
   <%= yield %>
-<div class="popup_content" id="login_popup"></div>
-<div class="popup_content" id="register_popup"></div>
+
+<div class="popup_content" id="login_popup">
+  <%= render template: "devise/sessions/new" %>
+</div>
+
+<div class="popup_content" id="register_popup">
+  <%= render template: "devise/registrations/new" %>
+</div>
   <%= render 'layouts/footer' %>
 </body>
 
