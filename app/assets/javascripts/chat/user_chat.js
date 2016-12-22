@@ -28,6 +28,9 @@ $(document).ready(function(){
 
   $(document).on("submit", "#message_form", function(){
     $("#chat-container").animate({ scrollTop: $("#message-board").height() }, "slow");
+    setTimeout(function(){
+      $("#message_content").val("");
+    }, 100)
   })
 
   $(document).on("click", "#close_chat", function(){
