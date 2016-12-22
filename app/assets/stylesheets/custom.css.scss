@@ -20,6 +20,7 @@ p, div {
   height: 50%;
   width: 100%;
   margin: 0 auto 0 auto;
+  
 }
 
 .move-front{
@@ -208,6 +209,9 @@ p, div {
   text-align: center;
 }
 
+.edit-user-button{
+    background: #fdfd72;
+}
 
 @media (min-width: 768px) {
   /* Navbar positioning foo */

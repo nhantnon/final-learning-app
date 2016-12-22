@@ -26,6 +26,9 @@
                                 <%= f.text_field :last_name, autofocus: true, hide_label: true, placeholder: "Last name"  %>
                                 </h2>
                               </li>
+                              <li class="list-group-item form-inline"><i class="fa fa-birthday-cake"></i>
+                                <%= f.date_field :dob, autofocus: true, hide_label: true %>
+                              </li>
                               <li class="list-group-item form-inline"><i class="fa fa-map-marker"></i>
                                 <%= f.text_field :location, autofocus: true, hide_label: true, placeholder: "Zip code" %>
                               </li>

@@ -12,6 +12,7 @@ $(document).ready(function(){
       $("#chat-button").hide()
       $("#close_chat").show()
       $(".panel-heading").append(response)
+      $("#message_content").focus()
       $("#chat-container").animate({ scrollTop: $("#message-board").height() }, "slow");
     })
   })
