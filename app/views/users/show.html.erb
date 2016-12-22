@@ -27,7 +27,15 @@
                               <li class="list-group-item"><i class="fa fa-envelope"></i> <%=@user.email%></li>
                            </ul>
                            <% if @user == current_user %>
-                             <%= link_to 'Edit Profile', user_profile_edit_path, class: "btn btn-default"%>
+                            <div id="edit-contact-container">
+                             <%= link_to 'Edit Profile', user_profile_edit_path, class: "btn btn-default edit-user-button"%>
+                             <ul id="contacted-users">
+                                <li id="contacts-heading">Recent Contacts:</li>
+                              <%@recent_contacts.each do |user|%>
+                                <li><a href="/users/<%=user.id%>"><%=user.full_name%></a></li>
+                              <%end%>
+                             </ul>
+                            </div>
                            <% end %>
                         </div>
                      </div>

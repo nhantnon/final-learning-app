@@ -10,6 +10,7 @@ $(document).ready(function(){
       data: data
     }).done(function(response){
       $("#chat-button").hide()
+      $("#close_chat").show()
       $(".panel-heading").append(response)
       $("#chat-container").animate({ scrollTop: $("#message-board").height() }, "slow");
     })
@@ -26,6 +27,13 @@ $(document).ready(function(){
 
   $(document).on("submit", "#message_form", function(){
     $("#chat-container").animate({ scrollTop: $("#message-board").height() }, "slow");
+  })
+
+  $(document).on("click", "#close_chat", function(){
+    $(this).remove()
+    $("#chat-container").remove()
+    $("#message_form").remove()
+    $("#chat-button").show()
   })
 });
 
