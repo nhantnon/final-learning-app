@@ -7,6 +7,13 @@
         <% if devise_mapping.rememberable? -%>
           <%= f.check_box :remember_me, checked: true%>
         <% end -%>
+
+        <div id='login-error' class="alert alert-danger hide" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          <span class="error-msg"></span>
+        </div>
+
         <%= render "devise/shared/links" %>
         <%= f.submit "Log in", id: "login-button" %>
     <% end %>
