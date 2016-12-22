@@ -1,5 +1,5 @@
 <div class="container search-form center-block">
-    <div class="row">    
+    <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
 		    <div class="input-group">
                 <div class="input-group-btn search-panel">
@@ -10,7 +10,7 @@
 					  	    <% end %>
 					       </select>
 				        </div>
-                <!-- <input type="hidden" name="search_param" value="all" id="search_param"> -->         
+                <!-- <input type="hidden" name="search_param" value="all" id="search_param"> -->
                 <input id="search-input" type="text" class="form-control" name="search" placeholder="Search by zip code">
                 <span class="input-group-btn">
                     <button id="submit-skill" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
@@ -19,6 +19,10 @@
         </div>
 	</div>
 </div>
+
+<div id="sidebar-peek"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></div>
+<div style="display:none" id="sidebar-full"><%= render partial: "homepage/sidebar"  %></div>
+<img style="display:none" id="search-example" width="500" height="300" class="mush-logo" src=<%=image_url("search_example.png")%>>
 
 <div id="map"></div>
 
