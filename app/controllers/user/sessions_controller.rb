@@ -4,6 +4,7 @@ class User::SessionsController < Devise::SessionsController
   # GET /resource/sign_in
   def new
     super
+    puts '-----------------------------------------------------------------------'
     if request.xhr?
       puts "----------------------------------------------------------------------"
       render 'devise/sessions/new', layout: false
