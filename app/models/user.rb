@@ -21,6 +21,28 @@ class User < ActiveRecord::Base
     return users
   end
 
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
+
+  def recent_messages
+    Message.where(sender_id: self.id).or(Message.where(reciever_id: self.id)).order(created_at: :desc)
+  end
+
+  def recent_contacts
+    contacts = []
+    recent_messages.each do |message|
+      if message.reciever == self
+        contacts.push(message.sender)
+      else
+        contacts.push(message.reciever)
+      end
+    end
+    contacts.uniq[0..4]
+  end
+
+  
+
   def default_image_number
     id.to_s.last
   end

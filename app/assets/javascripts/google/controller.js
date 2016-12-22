@@ -72,17 +72,25 @@ Controller.prototype.bindInfoWindow = function(marker, infowindow, html) {
 Controller.prototype.getCurrentPos = function(){
   var that = this;
   var map = this.map;
-  if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition( function(position) {
       var pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      console.log(pos)
       map.setCenter(pos);
       map.setZoom(12);
-    });
+    }, function(position){
+      var pos = {
+        lat: 39.8282,
+        lng: -98.5795
+      };
+      console.log(pos)
+      map.setCenter(pos);
+      map.setZoom(4);
+  })
   }
-}
+
 
 
 Controller.prototype.getPopUp = function(){
@@ -90,13 +98,15 @@ Controller.prototype.getPopUp = function(){
     event.preventDefault();
     var skill = $('#select-skill').val();
     var url = $(this).find('a.list_popup_open').context.href;
-
+    // $('#list_popup').addClass('hide');
     $.ajax({
       url: url+'?skill='+skill,
       method: 'get'
     })
     .done(function(response){
+
       $('#list_popup').html(response);
+      // $('#list_popup').removeClass('hide');
     })
   })
 }
@@ -106,6 +116,7 @@ Controller.prototype.getLoginPopUp = function(){
     event.preventDefault();
     console.log($(this).attr('href'));
     var url = $(this).attr('href');
+    $('login_popup').addClass('hide');
     $.ajax({
       url: url,
       method: 'get'
@@ -113,9 +124,8 @@ Controller.prototype.getLoginPopUp = function(){
     .done(function(response){
       var array = $.parseHTML(response);
       var result = $(array).filter("#login-pad")[0];
-      console.log(result);
-
       $('#login_popup').html(result);
+      $('login_popup').removeClass('hide');
     })
   })
 }
@@ -131,7 +141,6 @@ Controller.prototype.getRegisterPopUp = function(){
     .done(function(response){
       var array = $.parseHTML(response);
       var result = $(array).filter("#register-pad")[0];
-      console.log(result)
       $('#register_popup').html(result);
     })
   })
@@ -209,7 +218,7 @@ Controller.prototype.searchBySkill = function(skill){
   var distance = 5;
   $.ajax( {
     method: 'GET',
-    url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+input+'/'+distance+'/miles?minimal'
+    url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+input+'/'+distance+'/miles?minimal'
   } )
   .done(function(responses){
     for(var i in responses.zip_codes){
@@ -267,7 +276,7 @@ Controller.prototype.findZip = function(){
         var distance = 5;
         $.ajax( {
           method: 'GET',
-          url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
+          url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
         } )
         .done(function(responses){
           for(var i in responses.zip_codes){
@@ -335,7 +344,8 @@ Controller.prototype.initMap = function() {
   var that = this;
   this.map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
-    styles: this.getView().mapStyles()
+    styles: this.getView().mapStyles(),
+    backgroundColor: 'none'
   });
   this.getCurrentPos();
 }
@@ -364,15 +374,15 @@ Controller.prototype.initRegisterPopup = function(){
   });
 }
 
-Controller.prototype.loader = function(){
-  google.maps.event.addListenerOnce(this.map, 'idle', function(){
-    $('#map').hide();
-    $('#loader').removeClass('hide');
-  });
+Controller.prototype.beforeLoader = function(){
+  // google.maps.event.addListenerOnce(this.map, 'idle', function(){
+    $('.scene').removeClass('hide');
+  // });
+}
 
+Controller.prototype.afterLoader = function(){
   google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
-    $('#map').show();
-    $('#loader').addClass('hide');
+    $('.scene').addClass('hide');
   });
 }
 
@@ -381,14 +391,13 @@ Controller.prototype.initialize = function(){
   if(window.location.pathname == '/'){
     this.initMap();
     this.findZip();
-    this.loader();
+    this.beforeLoader();
+    this.afterLoader();
     this.initListPopup();
     this.getPopUp();
-
   }
   this.initLogInPopup();
   this.getLoginPopUp();
-
   this.initRegisterPopup();
   this.getRegisterPopUp();
   this.closePopUp();

@@ -23,6 +23,17 @@ p, div {
   margin: 0 auto 0 auto;
 }
 
+#contacted-users {
+  float: right;
+  margin-right: 20%;
+  list-style: none;
+}
+
+#contacts-heading {
+  font-size: 1.2em;
+  font-style: italic;
+  font-weight: 600;
+}
 
 .navbar-wrapper {
   position: absolute;
