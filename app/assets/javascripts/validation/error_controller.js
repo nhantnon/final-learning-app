@@ -5,7 +5,7 @@ ErrorController.prototype.loginValidation = function(){
     var url = $(this).attr('action');
     var data = $(this).serialize();
     var that = this;
-
+    console.log('in loginvar')
     event.preventDefault();
     $.ajax({
       url: url,
@@ -20,7 +20,7 @@ ErrorController.prototype.loginValidation = function(){
     .fail(function(jqXHR, textStatus, errorThrown){
       $('#login-button').removeAttr('disabled');
       $('#login-button').removeAttr('data-disable-with');
-      $('.error-msg').text(jqXHR);
+      $('.error-msg').text(jqXHR.responseText);
       $('#login-error').removeClass('hide');
     })
   })
@@ -46,13 +46,14 @@ ErrorController.prototype.registerValidation = function(){
     .fail(function(jqXHR, textStatus, errorThrown){
       $('#register-button').removeAttr('disabled');
       $('#register-button').removeAttr('data-disable-with');
-      $('.register-error-msg').text("Invalid Register");
-      $('#register-error').removeClass('hide');
+      // $('.register-error-msg').text("Invalid Register");
+      // $('#register-error').removeClass('hide');
     })
   })
 }
 
 ErrorController.prototype.initialize = function(){
+  console.log('in init - error')
   this.loginValidation();
   this.registerValidation();
 }
