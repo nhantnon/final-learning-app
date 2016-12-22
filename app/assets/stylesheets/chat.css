@@ -17,6 +17,20 @@
   overflow-y: scroll
 }
 
+#close_chat{
+  max-width: 100px;
+  font-size: .8em;
+  margin: 0 auto;
+  padding: 5px;
+  text-align: center;
+  background-color: #59A5D8;
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.44);
+  -moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.44);
+  box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.44);
+  cursor: pointer;
+}
+
 #message-board {
   display: flex;
   flex-direction: column;
