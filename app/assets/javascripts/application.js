@@ -19,7 +19,5 @@
 
 $(document).on('turbolinks:load', function() {
   new Controller().initialize();
-
-
-
+  new ErrorController().initialize();
 })
