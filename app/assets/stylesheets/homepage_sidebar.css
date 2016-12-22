@@ -1,0 +1,44 @@
+
+
+
+#sidebar-peek {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: #133C55;
+  width: 30px;
+  height: 250px;
+  top: 30%;
+  z-index: 10;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+}
+
+.fa-info-circle {
+  color: white;
+}
+
+#sidebar-full {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: #133C55;
+  width: 500px;
+  height: 250px;
+  top: 30%;
+  z-index: 10;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  color: #fff
+}
+
+#search-example {
+  position: absolute;
+  z-index: 10;
+  top: 30%;
+  left: 47%;
+}
