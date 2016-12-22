@@ -160,8 +160,14 @@ Controller.prototype.geocodeAddress = function(geocoder, responses, zips) {
     var x = 0;
     this.geocoder.geocode({'address': zips[i]}, function(results, status) {
       if (status === 'OK') {
-        var html = '<h1>' + that.returnUserByZip(responses, zips[x]).length + '</h1>' +
-          '<h2><a class=list_popup_open href="/searches/' + zips[x] + '">Take a look!</a><h2>'
+        if(that.returnUserByZip(responses, zips[x]).length > 1){
+          var learner = "people";
+        } else {
+          var learner = "person";
+        }
+        var html = '<div class="infowindow"><h1>' + zips[x] + '</h1>' +
+        '<h2>' + that.returnUserByZip(responses, zips[x]).length +' '+ learner + ' in your area</h2>' +
+          '<h3><a class=list_popup_open href="/searches/' + zips[x] + '">Take a look!</a><h3></div>'
 
         that.bindInfoWindow(that.getView().marker(map,results[0]), that.getView().infoWindow(), html);
         x ++;
@@ -409,7 +415,6 @@ Controller.prototype.initListPopup = function(){
 
 Controller.prototype.initLogInPopup = function(){
   $('#login_popup').popup({
-    outline: true, // optional
     focusdelay: 400, // optional
     vertical: 'top' //optional
   });
@@ -417,7 +422,6 @@ Controller.prototype.initLogInPopup = function(){
 
 Controller.prototype.initRegisterPopup = function(){
   $('#register_popup').popup({
-    outline: true, // optional
     focusdelay: 400, // optional
     vertical: 'top' //optional
   });

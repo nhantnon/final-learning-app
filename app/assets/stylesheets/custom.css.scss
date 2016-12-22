@@ -20,11 +20,14 @@ p, div {
   height: 50%;
   width: 100%;
   margin: 0 auto 0 auto;
-  
 }
 
 .move-front{
-  z-index: 10;
+  z-index: 99;
+}
+
+.mush-logo {
+  padding-top: 10px;
 }
 
 #contacted-users {
@@ -65,16 +68,13 @@ p, div {
   background-color: #133C55;
 }
 
-.container-fluid {
-
-}
-
 .footer {
   border-top: 1px solid black;
   padding-left: 50%;
   background-color: #133C55;
   margin-top: 5px;
   padding-top: 5px;
+
 }
 
 .pac-container {
@@ -206,9 +206,6 @@ p, div {
   text-align: center;
 }
 
-.edit-user-button{
-    background: #fdfd72;
-}
 
 @media (min-width: 768px) {
   /* Navbar positioning foo */
