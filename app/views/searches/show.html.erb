@@ -3,13 +3,11 @@
   <table class='table'>
     <tr>
       <th>Name</th>
-      <th>Skill</th>
       <th></th>
     </tr>
   <% @user_select.each do |user| %>
     <tr>
       <td><%= user.first_name %> <%= user.last_name %></td>
-      <td></td>
       <td><%= link_to 'Connect!', user_show_path(user), class: "user_link" %></td>
     </tr>
   <% end %>

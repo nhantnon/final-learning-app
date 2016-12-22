@@ -18,7 +18,7 @@ $(document).on('turbolinks:load', function(){
   $("#step-one").hover(function(){
     $(this).css("opacity", ".5")
     // $("#select-skill").css("background-color", "#59A5D8")
-    $("#select-skill").effect("bounce", {times: 5}, "slower")
+    $("#select-skill").effect("highlight", {}, 30).effect("bounce", {times: 5}, "slower");
   },function(){
     $(this).css("opacity", "1")
     $("#select-skill").css("background-color", "#fff")
@@ -26,7 +26,7 @@ $(document).on('turbolinks:load', function(){
 
   $("#step-two").hover(function(){
     $(this).css("opacity", ".5")
-    $("#search-input").effect("bounce", {times: 5}, "slower")
+    $("#search-input").effect("highlight", {}, 30).effect("bounce", {times: 5}, "slower");
   },function(){
     $(this).css("opacity", "1")
     $("#search-input").css("background-color", "#fff")
@@ -34,7 +34,7 @@ $(document).on('turbolinks:load', function(){
 
   $("#step-three").hover(function(){
     $(this).css("opacity", ".5")
-    $("#submit-skill").effect("bounce", {times: 5}, "slower")
+    $("#submit-skill").effect("highlight", {}, 30).effect("bounce", {times: 5}, "slower");
     $("#search-example").fadeIn()
 
   },function(){
