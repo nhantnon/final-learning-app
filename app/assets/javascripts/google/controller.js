@@ -1,4 +1,5 @@
 var markersArray = [];
+var infoArray = [];
 
 function clearOverlays() {
   for (var i = 0; i < markersArray.length; i++ ) {
@@ -62,9 +63,12 @@ Controller.prototype.onePerZip = function(responses){
 Controller.prototype.bindInfoWindow = function(marker, infowindow, html) {
   var that = this;
   marker.addListener('click', function(){
-
+      infoArray.forEach(function(e){
+        e.close();
+      });
       infowindow.setContent(html);
-      infowindow.open(that.map, this)
+      infowindow.open(that.map, this);
+      infoArray.push(infowindow);
   })
 }
 
@@ -218,7 +222,7 @@ Controller.prototype.searchBySkill = function(skill){
   var distance = 5;
   $.ajax( {
     method: 'GET',
-    url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+input+'/'+distance+'/miles?minimal'
+    url:'https://www.zipcodeapi.com/rest/js-mJE2U2W4fBRJRyFPKeCk7Sd9WjzCJSY5BD8wG4BVGsFx1knLy05GSjPPDprmhpsT/radius.json/'+input+'/'+distance+'/miles?minimal'
   } )
   .done(function(responses){
     for(var i in responses.zip_codes){
@@ -276,7 +280,7 @@ Controller.prototype.findZip = function(){
         var distance = 5;
         $.ajax( {
           method: 'GET',
-          url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
+          url:'https://www.zipcodeapi.com/rest/js-mJE2U2W4fBRJRyFPKeCk7Sd9WjzCJSY5BD8wG4BVGsFx1knLy05GSjPPDprmhpsT/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
         } )
         .done(function(responses){
           for(var i in responses.zip_codes){
@@ -314,7 +318,7 @@ Controller.prototype.findZip = function(){
       var distance = 5;
       $.ajax( {
         method: 'GET',
-        url:'https://www.zipcodeapi.com/rest/js-xajS0POOeO3ei2dGKgJSBq6k4NEdmrCUBVMCLAqZpueHwrngH79jxfEB2iPpJrjl/radius.json/'+input+'/'+distance+'/miles?minimal'
+        url:'https://www.zipcodeapi.com/rest/js-mJE2U2W4fBRJRyFPKeCk7Sd9WjzCJSY5BD8wG4BVGsFx1knLy05GSjPPDprmhpsT/radius.json/'+input+'/'+distance+'/miles?minimal'
       } )
       .done(function(responses){
         for(var i in responses.zip_codes){
@@ -346,7 +350,7 @@ Controller.prototype.findZip = function(){
   var input = $('#search-input').val();
   var closestZipToMap = new Array;
   var skill_selected = document.getElementById("select-skill").value;
-  
+
   if (skill_selected === "All"){
       clearOverlays(); // clears all markers from map
       var closestZips = new Array;
@@ -357,7 +361,7 @@ Controller.prototype.findZip = function(){
       var distance = 5;
       $.ajax( {
         method: 'GET',
-        url:'https://www.zipcodeapi.com/rest/js-xajS0POOeO3ei2dGKgJSBq6k4NEdmrCUBVMCLAqZpueHwrngH79jxfEB2iPpJrjl/radius.json/'+input+'/'+distance+'/miles?minimal'
+        url:'https://www.zipcodeapi.com/rest/js-mJE2U2W4fBRJRyFPKeCk7Sd9WjzCJSY5BD8wG4BVGsFx1knLy05GSjPPDprmhpsT/radius.json/'+input+'/'+distance+'/miles?minimal'
       } )
       .done(function(responses){
         for(var i in responses.zip_codes){
