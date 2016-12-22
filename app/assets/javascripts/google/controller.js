@@ -72,17 +72,25 @@ Controller.prototype.bindInfoWindow = function(marker, infowindow, html) {
 Controller.prototype.getCurrentPos = function(){
   var that = this;
   var map = this.map;
-  if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition( function(position) {
       var pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      console.log(pos)
       map.setCenter(pos);
       map.setZoom(12);
-    });
+    }, function(position){
+      var pos = {
+        lat: 39.8282,
+        lng: -98.5795
+      };
+      console.log(pos)
+      map.setCenter(pos);
+      map.setZoom(4);
+  })
   }
-}
+
 
 
 Controller.prototype.getPopUp = function(){
