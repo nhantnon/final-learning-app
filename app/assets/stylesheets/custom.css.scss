@@ -11,16 +11,19 @@ p, div {
 }
 
 .yield-box {
-  padding-top: 50px;
+  padding-top: 30px;
 }
 
 .search-form {
   padding-top: 10px;
   position: absolute;
-  z-index: 99;
-    height: 50%;
+  height: 50%;
   width: 100%;
   margin: 0 auto 0 auto;
+}
+
+.move-front{
+  z-index: 99;
 }
 
 #contacted-users {
