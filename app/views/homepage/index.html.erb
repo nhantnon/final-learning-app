@@ -1,11 +1,24 @@
-<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-
-<select id="select-skill">
-  <option value="All">All</option>
-  <% @skills.each do |skill| %>
-    <option value="<%=skill.name%>"><%=skill.name%></option>
-  <% end %>
-</select>
+<div class="container search-form center-block">
+    <div class="row">    
+        <div class="col-xs-8 col-xs-offset-2">
+		    <div class="input-group">
+                <div class="input-group-btn search-panel">
+               		<select id="select-skill" class="btn btn-default dropdown-toggle move-front" data-toggle="dropdown">
+					       	<option value="All">All</option>
+					  	    <% @skills.each do |skill| %>
+					    	    <option value="<%=skill.name%>"><%=skill.name%></option>
+					  	    <% end %>
+					       </select>
+				        </div>
+                <!-- <input type="hidden" name="search_param" value="all" id="search_param"> -->         
+                <input id="search-input" type="text" class="form-control" name="search" placeholder="Search by zip code">
+                <span class="input-group-btn">
+                    <button id="submit-skill" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </div>
+	</div>
+</div>
 
 <div id="map"></div>
 
@@ -18,3 +31,5 @@
 
 
 <div class="popup_content" id="list_popup"></div>
+
+

@@ -204,7 +204,7 @@ Controller.prototype.searchBySkill = function(skill){
   var that = this;
   console.log("searching by skill...");
   console.log(skill);
-  var input = $('#pac-input').val();
+  var input = $('#search-input').val();
   var closestZipToMap = new Array;
   var skill_selected = document.getElementById("select-skill").value;
   clearOverlays(); // clears all markers from map
@@ -251,8 +251,8 @@ Controller.prototype.closePopUp = function(){
 
 Controller.prototype.findZip = function(){
   var that = this;
-  if (document.getElementById('pac-input').value){
-    var inputBox = document.getElementById('pac-input');
+  if (document.getElementById('search-input').value){
+    var inputBox = document.getElementById('search-input');
   } else {
     var inputBox;
     navigator.geolocation.getCurrentPosition( function(position) {
@@ -298,9 +298,9 @@ Controller.prototype.findZip = function(){
     });
   }
 
-  $('#pac-input').keypress(function(event){
+  $('#search-input').keypress(function(event){
 
-    var input = $('#pac-input').val();
+    var input = $('#search-input').val();
     var closestZipToMap = new Array;
     var skill_selected = document.getElementById("select-skill").value;
 
@@ -403,3 +403,4 @@ Controller.prototype.initialize = function(){
   this.closePopUp();
 
 }
+
