@@ -114,35 +114,35 @@ Controller.prototype.getPopUp = function(){
 Controller.prototype.getLoginPopUp = function(){
   $(document).on('click','a#login-link',function(event){
     event.preventDefault();
-    console.log($(this).attr('href'));
-    var url = $(this).attr('href');
-    $('login_popup').addClass('hide');
-    $.ajax({
-      url: url,
-      method: 'get'
-    })
-    .done(function(response){
-      var array = $.parseHTML(response);
-      var result = $(array).filter("#login-pad")[0];
-      $('#login_popup').html(result);
-      $('login_popup').removeClass('hide');
-    })
+    // $('#login_popup').hide();
+    // console.log($(this).attr('href'));
+    // var url = $(this).attr('href');
+    // $.ajax({
+      // url: url,
+      // method: 'get'
+    // })
+    // .done(function(response){
+      // var array = $.parseHTML(response);
+      // var result = $(array).filter("#login-pad")[0];
+      // $('#login_popup').html(result);
+      // $('#login_popup').show();
+    // })
   })
 }
 
 Controller.prototype.getRegisterPopUp = function(){
   $(document).on('click','a#register-link',function(event){
     event.preventDefault();
-    var url = $(this).attr('href');
-    $.ajax({
-      url: url,
-      method: 'get'
-    })
-    .done(function(response){
-      var array = $.parseHTML(response);
-      var result = $(array).filter("#register-pad")[0];
-      $('#register_popup').html(result);
-    })
+    // var url = $(this).attr('href');
+    // $.ajax({
+    //   url: url,
+    //   method: 'get'
+    // })
+    // .done(function(response){
+    //   var array = $.parseHTML(response);
+    //   var result = $(array).filter("#register-pad")[0];
+    //   $('#register_popup').html(result);
+    // })
   })
 }
 
@@ -218,7 +218,7 @@ Controller.prototype.searchBySkill = function(skill){
   var distance = 5;
   $.ajax( {
     method: 'GET',
-    url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+input+'/'+distance+'/miles?minimal'
+    url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+input+'/'+distance+'/miles?minimal'
   } )
   .done(function(responses){
     for(var i in responses.zip_codes){
@@ -276,7 +276,7 @@ Controller.prototype.findZip = function(){
         var distance = 5;
         $.ajax( {
           method: 'GET',
-          url:'https://www.zipcodeapi.com/rest/js-nP5m53NhaSPHoEmKqleDPXjY34d2NpDaeIxjLkBWdqDB50mvlA9byt9BxnElMhw1/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
+          url:'https://www.zipcodeapi.com/rest/js-GndwNs6mvC77crir2652doTpHAR0LTLrgYX3r4pXHx4TYml1tq3HOX6wyYxjRiK7/radius.json/'+inputBox+'/'+distance+'/miles?minimal'
         } )
         .done(function(responses){
           for(var i in responses.zip_codes){
@@ -403,4 +403,3 @@ Controller.prototype.initialize = function(){
   this.closePopUp();
 
 }
-
