@@ -20,4 +20,5 @@
 $(document).on('turbolinks:load', function() {
   new Controller().initialize();
   new ErrorController().initialize();
+  console.log('in appks - turbolinks load')
 })
