@@ -5,6 +5,7 @@ ruby "2.2.4"
 # gem 'simplecov', :require => false, :group => :test
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'materialize-sass'
+
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
@@ -14,6 +15,9 @@ gem 'redis'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'bootstrap_form'
 gem 'sass-rails', '~> 5.0'
+gem 'compass-rails'
+gem 'compass-susy-plugin'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
