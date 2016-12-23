@@ -1,6 +1,6 @@
 <script type="text/javascript"></script>
 
-<p><%= link_to "Back to Map Results", :root%></p>
+<p style="color:white"><%= link_to "Back to Map Results", :root%></p>
 
 <div class="container userInfo">
 <div class="row">
@@ -23,7 +23,7 @@
                         <div class="col-xs-12 col-sm-8">
                            <ul class="list-group">
                               <li class="list-group-item"><h2><%=@user.first_name + " " + @user.last_name%></h2></li>
-                              <li class="list-group-item"><i class="fa fa-birthday-cake"></i>  <%=@user.dob.strftime("%B %Y")%></li>
+                              <li class="list-group-item"><i class="fa fa-birthday-cake"></i>  <%=@user.dob.strftime("%B %d")%></li>
                               <li class="list-group-item"><i class="fa fa-map-marker"></i>  <%=@user.location%></li>
                               <li class="list-group-item"><i class="fa fa-envelope"></i> <%=@user.email%></li>
                            </ul>
