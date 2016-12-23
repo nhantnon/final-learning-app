@@ -70,10 +70,11 @@ p, div {
 
 .footer {
   border-top: 1px solid black;
-  margin-top: 45px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: #59A5D8
+  padding-left: 50%;
+  background-color: #133C55;
+  margin-top: 5px;
+  padding-top: 5px;
+
 }
 
 .pac-container {
@@ -97,7 +98,7 @@ p, div {
 
 
 #map {
-        height: 80%;
+        height: 96%;
         width: 100%;
         margin: 0 auto 0 auto;
 
@@ -238,6 +239,7 @@ p, div {
 /*   */
 
 body {
+  height: 96vh;
   margin-top:20px;
   background:#386FA4;
 }
